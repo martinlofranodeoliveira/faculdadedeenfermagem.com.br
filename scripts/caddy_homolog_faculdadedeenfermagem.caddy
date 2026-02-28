@@ -2,7 +2,7 @@
 # Requires the (static_landing) snippet in the main Caddyfile.
 
 homolog.faculdadedeenfermagem.com.br {
-  root * /www/wwwroot/faculdadedeenfermagem.com.br/dist
+  root * /www/wwwroot/homolog.faculdadedeenfermagem.com.br/dist
 
   header {
     X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex"
