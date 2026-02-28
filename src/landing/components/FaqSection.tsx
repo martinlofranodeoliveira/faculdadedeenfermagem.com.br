@@ -3,7 +3,7 @@ export function FaqSection() {
     <section id="graduacao" className="lp-program">
       <div className="lp-program__inner">
         <div className="lp-program__content">
-          <h2 className="lp-program__title">GRADUAÇÃO PRESENCIAL EM ENFERMAGEM</h2>
+          <h1 className="lp-program__title">GRADUAÇÃO PRESENCIAL EM ENFERMAGEM</h1>
           <p className="lp-program__subtitle">Cuidando de você com atenção e excelência.</p>
 
           <div className="lp-program__meta">
