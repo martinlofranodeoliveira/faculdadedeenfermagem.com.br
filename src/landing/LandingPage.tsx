@@ -1,5 +1,5 @@
 import './landing.css'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import type { CourseLeadSelection } from './crmLead'
 import { CourseSection } from './components/CourseSection'
@@ -23,6 +23,19 @@ const HERO_COURSE_SELECTION: CourseLeadSelection = {
 
 export function LandingPage() {
   const [popupSelection, setPopupSelection] = useState<CourseLeadSelection | null>(null)
+
+  useEffect(() => {
+    const nextUrl = `${window.location.pathname}${window.location.search}`
+    if (window.location.hash) {
+      window.history.replaceState(null, '', nextUrl)
+    }
+
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
+    window.scrollTo(0, 0)
+  }, [])
 
   const openHeroPopup = useCallback(() => {
     setPopupSelection(HERO_COURSE_SELECTION)
