@@ -4,104 +4,98 @@ import type { KeyboardEvent } from 'react'
 type CourseTab = {
   id: string
   label: string
-  title: string
-  description: string
-  highlight: string
-  bullets: string[]
+  targetId: string
 }
 
 const courseTabs: CourseTab[] = [
-  {
-    id: 'sobre',
-    label: 'Sobre o curso',
-    title: 'SOBRE O CURSO DE ENFERMAGEM',
-    description:
-      'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque na área, que aliam conhecimentos teóricos e discussões sobre a prática profissional, com aprendizagem em foco.',
-    highlight:
-      'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque.',
-    bullets: [
-      'Base teórica e prática equilibrada',
-      'Acompanhamento com docentes experientes',
-      'Conteúdo atualizado para a área da saúde',
-      'Formação orientada para a vida real',
-    ],
-  },
-  {
-    id: 'perfil',
-    label: 'Perfil do profissional',
-    title: 'PERFIL DO PROFISSIONAL',
-    description:
-      'Ao final da graduação, o egresso estará preparado para atuar com olhar clínico, empatia e responsabilidade, considerando o cuidado integral do paciente em diferentes contextos.',
-    highlight:
-      'O profissional formado desenvolve liderança, pensamento crítico e capacidade de decisão em cenários complexos.',
-    bullets: [
-      'Atuação humanizada no cuidado',
-      'Visão estratégica em saúde coletiva',
-      'Capacidade de liderar equipes multiprofissionais',
-      'Postura ética em todas as etapas do cuidado',
-    ],
-  },
-  {
-    id: 'mercado',
-    label: 'Mercado de trabalho',
-    title: 'MERCADO DE TRABALHO',
-    description:
-      'A enfermagem segue com alta demanda em hospitais, clínicas, unidades básicas, atenção domiciliar e empresas. O mercado valoriza profissionais com boa formação técnica e visão interdisciplinar.',
-    highlight:
-      'Com uma formação completa, você amplia suas oportunidades de ingresso e crescimento em diferentes frentes da saúde.',
-    bullets: [
-      'Alta empregabilidade em todo o país',
-      'Possibilidade de carreira em gestão',
-      'Espaço para atuação pública e privada',
-      'Evolução contínua com especializações',
-    ],
-  },
-  {
-    id: 'grade',
-    label: 'Grade curricular',
-    title: 'GRADE CURRICULAR',
-    description:
-      'A estrutura curricular combina fundamentos biológicos, ciências humanas, prática supervisionada e componentes de inovação em saúde para uma jornada acadêmica progressiva.',
-    highlight:
-      'A grade foi desenhada para conectar teoria, laboratório e campo prático desde os primeiros períodos.',
-    bullets: [
-      'Disciplinas organizadas por trilhas',
-      'Atividades práticas desde cedo',
-      'Integração com projetos interdisciplinares',
-      'Progressão clara de competências',
-    ],
-  },
-  {
-    id: 'modalidade',
-    label: 'Modalidade',
-    title: 'MODALIDADE',
-    description:
-      'Esta graduação é ofertada na modalidade presencial, com experiências práticas e acompanhamento próximo de professores e tutores ao longo de toda a formação.',
-    highlight:
-      'A vivência presencial fortalece habilidades técnicas, comunicação com pacientes e trabalho em equipe.',
-    bullets: [
-      'Aulas presenciais com suporte acadêmico',
-      'Laboratórios e atividades em campo',
-      'Interação direta com professores',
-      'Rotina de aprendizado colaborativo',
-    ],
-  },
+  { id: 'sobre', label: 'Sobre o curso', targetId: 'sobre-curso' },
+  { id: 'perfil', label: 'Perfil do profissional', targetId: 'perfil-banner' },
+  { id: 'mercado', label: 'Mercado de trabalho', targetId: 'mercado-trabalho' },
+  { id: 'grade', label: 'Grade curricular', targetId: 'grade-curricular' },
 ]
+
+const aboutCourse = {
+  title: 'SOBRE O CURSO DE ENFERMAGEM',
+  description:
+    'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque na área, que aliam conhecimentos teóricos e discussões sobre a prática profissional, com aprendizagem em foco.',
+  highlight:
+    'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque.',
+  bullets: [
+    'Base teórica e prática equilibrada',
+    'Acompanhamento com docentes experientes',
+    'Conteúdo atualizado para a área da saúde',
+    'Formação orientada para a vida real',
+  ],
+}
 
 export function FooterSection() {
   const [activeTabId, setActiveTabId] = useState(courseTabs[0].id)
+  const [isPinned, setIsPinned] = useState(false)
+  const [shellHeight, setShellHeight] = useState(0)
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
+
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const shellRef = useRef<HTMLDivElement | null>(null)
   const navRef = useRef<HTMLElement | null>(null)
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const pinStartRef = useRef(0)
+
   const activeIndex = courseTabs.findIndex((tab) => tab.id === activeTabId)
-  const activeTab = courseTabs[activeIndex] ?? courseTabs[0]
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 133 })
+
+  const measureShell = useCallback(() => {
+    const shellElement = shellRef.current
+    if (!shellElement) return
+    setShellHeight(shellElement.offsetHeight)
+  }, [])
+
+  const recalculatePinStart = useCallback(() => {
+    const sectionElement = sectionRef.current
+    if (!sectionElement) return
+    pinStartRef.current = window.scrollY + sectionElement.getBoundingClientRect().top
+  }, [])
+
+  const getScrollOffset = useCallback(() => {
+    return (shellRef.current?.offsetHeight ?? shellHeight) + 12
+  }, [shellHeight])
+
+  const scrollToTarget = useCallback(
+    (targetId: string) => {
+      const targetElement = document.getElementById(targetId)
+      if (!targetElement) return
+
+      const offset = getScrollOffset()
+      const top = window.scrollY + targetElement.getBoundingClientRect().top - offset
+
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: 'smooth',
+      })
+    },
+    [getScrollOffset],
+  )
+
+  const setActiveByIndex = useCallback(
+    (index: number, shouldScroll: boolean) => {
+      const normalizedIndex = (index + courseTabs.length) % courseTabs.length
+      const nextTab = courseTabs[normalizedIndex]
+      const nextButton = tabRefs.current[normalizedIndex]
+      if (!nextTab) return
+
+      setActiveTabId(nextTab.id)
+      nextButton?.focus()
+      nextButton?.scrollIntoView({ inline: 'center', block: 'nearest' })
+
+      if (shouldScroll) {
+        scrollToTarget(nextTab.targetId)
+      }
+    },
+    [scrollToTarget],
+  )
 
   const updateIndicator = useCallback(() => {
     const navElement = navRef.current
     const activeButton = tabRefs.current[activeIndex]
-    if (!navElement || !activeButton) {
-      return
-    }
+    if (!navElement || !activeButton) return
 
     const navRect = navElement.getBoundingClientRect()
     const buttonRect = activeButton.getBoundingClientRect()
@@ -112,97 +106,137 @@ export function FooterSection() {
     })
   }, [activeIndex])
 
-  useEffect(() => {
-    updateIndicator()
+  const updateActiveTabByScroll = useCallback(() => {
+    const offset = getScrollOffset()
+    let nextActiveId = courseTabs[0].id
 
-    if ('fonts' in document) {
-      document.fonts.ready.then(updateIndicator).catch(() => undefined)
+    for (const tab of courseTabs) {
+      const sectionElement = document.getElementById(tab.targetId)
+      if (!sectionElement) continue
+
+      const sectionTop = sectionElement.getBoundingClientRect().top
+      if (sectionTop - offset <= 2) {
+        nextActiveId = tab.id
+      }
     }
 
-    window.addEventListener('resize', updateIndicator)
-    return () => window.removeEventListener('resize', updateIndicator)
-  }, [updateIndicator])
-
-  const setActiveByIndex = useCallback((index: number) => {
-    const nextTab = courseTabs[index]
-    const nextButton = tabRefs.current[index]
-    if (!nextTab) {
-      return
-    }
-
-    setActiveTabId(nextTab.id)
-    nextButton?.focus()
-  }, [])
+    setActiveTabId((current) => (current === nextActiveId ? current : nextActiveId))
+  }, [getScrollOffset])
 
   const handleTabKeyDown = useCallback(
     (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
       if (event.key === 'ArrowRight') {
         event.preventDefault()
-        setActiveByIndex((index + 1) % courseTabs.length)
+        setActiveByIndex(index + 1, true)
         return
       }
 
       if (event.key === 'ArrowLeft') {
         event.preventDefault()
-        setActiveByIndex((index - 1 + courseTabs.length) % courseTabs.length)
+        setActiveByIndex(index - 1, true)
         return
       }
 
       if (event.key === 'Home') {
         event.preventDefault()
-        setActiveByIndex(0)
+        setActiveByIndex(0, true)
         return
       }
 
       if (event.key === 'End') {
         event.preventDefault()
-        setActiveByIndex(courseTabs.length - 1)
+        setActiveByIndex(courseTabs.length - 1, true)
       }
     },
     [setActiveByIndex],
   )
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsPinned(window.scrollY >= pinStartRef.current)
+      updateActiveTabByScroll()
+    }
+
+    const handleResize = () => {
+      measureShell()
+      recalculatePinStart()
+      updateIndicator()
+      handleScroll()
+    }
+
+    measureShell()
+    recalculatePinStart()
+    updateIndicator()
+    handleScroll()
+
+    if ('fonts' in document) {
+      document.fonts.ready
+        .then(() => {
+          handleResize()
+        })
+        .catch(() => undefined)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [measureShell, recalculatePinStart, updateIndicator, updateActiveTabByScroll])
+
+  useEffect(() => {
+    updateIndicator()
+    const activeButton = tabRefs.current[activeIndex]
+    activeButton?.scrollIntoView({ inline: 'center', block: 'nearest' })
+  }, [activeIndex, updateIndicator])
+
   return (
-    <section id="contato" className="lp-course-tabs">
-      <div className="lp-course-tabs__inner">
-        <nav ref={navRef} className="lp-course-tabs__nav" aria-label="Subseções do curso" role="tablist">
-          {courseTabs.map((tab, index) => (
-            <button
-              key={tab.id}
-              id={`course-tab-${tab.id}`}
-              ref={(node) => {
-                tabRefs.current[index] = node
+    <section id="contato" ref={sectionRef} className="lp-course-tabs">
+      <div
+        className="lp-course-tabs__spacer"
+        aria-hidden="true"
+        style={isPinned && shellHeight ? { height: `${shellHeight}px` } : undefined}
+      />
+
+      <div ref={shellRef} className={`lp-course-tabs__shell ${isPinned ? 'is-pinned' : ''}`}>
+        <div className="lp-course-tabs__inner">
+          <nav ref={navRef} className="lp-course-tabs__nav" aria-label="Navegação de seções do curso">
+            {courseTabs.map((tab, index) => (
+              <button
+                key={tab.id}
+                ref={(node) => {
+                  tabRefs.current[index] = node
+                }}
+                type="button"
+                className={`lp-course-tabs__tab ${activeTabId === tab.id ? 'is-active' : ''}`}
+                aria-current={activeTabId === tab.id ? 'page' : undefined}
+                onClick={() => {
+                  setActiveByIndex(index, true)
+                }}
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="lp-course-tabs__track" aria-hidden="true">
+            <span className="lp-course-tabs__track-line" />
+            <span
+              className="lp-course-tabs__indicator"
+              style={{
+                width: `${indicatorStyle.width}px`,
+                transform: `translateX(${indicatorStyle.left}px)`,
               }}
-              type="button"
-              role="tab"
-              aria-selected={activeTab.id === tab.id}
-              aria-controls={`course-panel-${tab.id}`}
-              className={`lp-course-tabs__tab ${activeTab.id === tab.id ? 'is-active' : ''}`}
-              onClick={() => setActiveTabId(tab.id)}
-              onKeyDown={(event) => handleTabKeyDown(event, index)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </nav>
-
-        <div className="lp-course-tabs__track" aria-hidden="true">
-          <span className="lp-course-tabs__track-line" />
-          <span
-            className="lp-course-tabs__indicator"
-            style={{
-              width: `${indicatorStyle.width}px`,
-              transform: `translateX(${indicatorStyle.left}px)`,
-            }}
-          />
+            />
+          </div>
         </div>
+      </div>
 
-        <article
-          id={`course-panel-${activeTab.id}`}
-          role="tabpanel"
-          aria-labelledby={`course-tab-${activeTab.id}`}
-          className="lp-course-about"
-        >
+      <div className="lp-course-tabs__content">
+        <article id="sobre-curso" className="lp-course-about">
           <div className="lp-course-about__media">
             <img
               src="/landing/course-about-image.png"
@@ -213,12 +247,12 @@ export function FooterSection() {
           </div>
 
           <div className="lp-course-about__content">
-            <h2 className="lp-course-about__title">{activeTab.title}</h2>
-            <p className="lp-course-about__description">{activeTab.description}</p>
-            <p className="lp-course-about__highlight">{activeTab.highlight}</p>
+            <h2 className="lp-course-about__title">{aboutCourse.title}</h2>
+            <p className="lp-course-about__description">{aboutCourse.description}</p>
+            <p className="lp-course-about__highlight">{aboutCourse.highlight}</p>
 
             <ul className="lp-course-about__bullets">
-              {activeTab.bullets.map((item) => (
+              {aboutCourse.bullets.map((item) => (
                 <li key={item}>
                   <img src="/landing/course-check.svg" alt="" aria-hidden="true" />
                   <span>{item}</span>

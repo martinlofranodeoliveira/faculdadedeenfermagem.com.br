@@ -1,21 +1,19 @@
-const marketCards = [
+﻿const marketCards = [
   {
     image: '/landing/mercado-card-1.png',
-    title: 'Título',
-    description:
-      'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcast.',
+    title: 'Saúde Pública',
+    description: 'Presta cuidado a doentes em clínicas, postos, berçários e colégios.',
   },
   {
     image: '/landing/mercado-card-2.png',
-    title: 'Título',
+    title: 'Enfermeiro de Resgate',
     description:
-      'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcast.',
+      'Integra grupos de resgate de pessoas feridas em ocorrências ou em desastres coletivos.',
   },
   {
     image: '/landing/mercado-card-3.png',
-    title: 'Título',
-    description:
-      'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcast.',
+    title: 'Enfermeiro Pediátrico',
+    description: 'Monitora e analisa a evolução e o progresso infantil.',
   },
 ]
 

@@ -617,10 +617,36 @@
 
 .lp-course-tabs {
   background: #ffffff;
-  padding: 40px 0 80px;
+  padding: 0;
+  position: relative;
+  z-index: 30;
+}
+
+.lp-course-tabs__spacer {
+  height: 0;
+}
+
+.lp-course-tabs__shell {
+  width: 100%;
+  background: #ffffff;
+}
+
+.lp-course-tabs__shell.is-pinned {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 120;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .lp-course-tabs__inner {
+  width: min(1240px, 100% - 2rem);
+  margin: 0 auto;
+  padding: 32px 0 18px;
+}
+
+.lp-course-tabs__content {
   width: min(1240px, 100% - 2rem);
   margin: 0 auto;
 }
@@ -663,7 +689,7 @@
 
 .lp-course-tabs__track {
   position: relative;
-  margin-top: 28px;
+  margin-top: 18px;
   width: 100%;
   height: 7px;
 }
@@ -784,7 +810,7 @@
 
 .lp-profile-banner {
   background: #ffffff;
-  padding: 0 0 40px;
+  padding: 70px 0 40px;
 }
 
 .lp-profile-banner__inner {
@@ -902,9 +928,9 @@
   background: transparent;
   padding: 20px 30px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
-  column-gap: 45px;
+  column-gap: 24px;
   text-align: left;
   cursor: pointer;
 }
@@ -921,11 +947,21 @@
 .lp-grade__subject {
   min-width: 0;
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 30px;
   color: #061e20;
   overflow-wrap: anywhere;
+}
+
+.lp-grade__workload {
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  color: #061e20;
+  opacity: 0.88;
+  white-space: nowrap;
 }
 
 .lp-grade__icon-wrap {
@@ -954,6 +990,15 @@
 .lp-grade__panel {
   padding: 0 30px 22px;
   border-top: 1px solid rgba(6, 30, 32, 0.15);
+}
+
+.lp-grade__panel-title {
+  margin: 14px 0 0;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #061e20;
 }
 
 .lp-grade__panel ul {
@@ -1735,7 +1780,11 @@
   }
 
   .lp-course-tabs {
-    padding: 32px 0 52px;
+    padding: 0;
+  }
+
+  .lp-course-tabs__inner {
+    padding: 24px 0 14px;
   }
 
   .lp-course-tabs__nav {
@@ -1821,16 +1870,23 @@
     min-height: 88px;
     padding: 16px 20px;
     column-gap: 18px;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
   }
 
   .lp-grade__term,
-  .lp-grade__subject {
+  .lp-grade__subject,
+  .lp-grade__workload {
     font-size: 20px;
     line-height: 1.25;
   }
 
   .lp-grade__panel {
     padding: 0 20px 16px;
+  }
+
+  .lp-grade__panel-title {
+    margin-top: 12px;
+    font-size: 20px;
   }
 
   .lp-grade__panel li {
@@ -2041,7 +2097,11 @@
   }
 
   .lp-course-tabs {
-    padding: 28px 0 42px;
+    padding: 0;
+  }
+
+  .lp-course-tabs__inner {
+    padding: 20px 0 12px;
   }
 
   .lp-course-tabs__tab {
@@ -2144,7 +2204,7 @@
     min-height: 76px;
     padding: 14px 14px 14px 16px;
     column-gap: 10px;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     row-gap: 4px;
   }
 
@@ -2155,14 +2215,22 @@
   }
 
   .lp-grade__subject {
-    grid-column: 1 / 2;
+    grid-column: 1 / -1;
     font-size: 18px;
     line-height: 1.25;
   }
 
-  .lp-grade__icon-wrap {
+  .lp-grade__workload {
     grid-column: 2 / 3;
-    grid-row: 1 / span 2;
+    grid-row: 1;
+    font-size: 18px;
+    line-height: 1.2;
+    justify-self: end;
+  }
+
+  .lp-grade__icon-wrap {
+    grid-column: 3 / 4;
+    grid-row: 1;
     width: 44px;
     height: 44px;
   }
@@ -2174,6 +2242,12 @@
 
   .lp-grade__panel {
     padding: 0 14px 14px 16px;
+  }
+
+  .lp-grade__panel-title {
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 1.25;
   }
 
   .lp-grade__panel ul {
