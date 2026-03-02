@@ -17,13 +17,13 @@ const courseTabs: CourseTab[] = [
 const aboutCourse = {
   title: 'SOBRE O CURSO DE ENFERMAGEM',
   description:
-    'A cada disciplina, voc\u00ea contar\u00e1 com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque na \u00e1rea, que aliam conhecimentos te\u00f3ricos e discuss\u00f5es sobre a pr\u00e1tica profissional, como aprendizagem em foco.',
+    'A gradua\u00e7\u00e3o em Enfermagem capacita especialistas para trabalhar na preven\u00e7\u00e3o e no incentivo \u00e0 sa\u00fade em diferentes contextos. Com dura\u00e7\u00e3o de cinco anos, habilita para a atua\u00e7\u00e3o conjunta com demais profissionais do setor, aprimorando habilidades em assist\u00eancia, gest\u00e3o de f\u00e1rmacos, obten\u00e7\u00e3o de informa\u00e7\u00f5es cl\u00ednicas e defini\u00e7\u00e3o de condutas.',
   highlight:
     'Oferece forma\u00e7\u00e3o pr\u00e1tica e prepara o aluno para atender \u00e0s demandas sociais com excel\u00eancia.',
   bullets: [
-    'Capacita\u00e7\u00e3o para atua\u00e7\u00e3o integrada com outros profissionais da \u00e1rea',
+    'Aprenda com imers\u00e3o pr\u00e1tica intensiva desde o in\u00edcio',
     'Atue na preven\u00e7\u00e3o e incentivo \u00e0 sa\u00fade',
-    'Se torne especialista em Enfermagem',
+    'Pratique em Laborat\u00f3rios pr\u00f3prios com simuladores e tecnologia de ponta',
     'Trabalhe em diferentes contextos e ambientes de sa\u00fade',
   ],
 }
