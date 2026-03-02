@@ -17,18 +17,22 @@ const courseTabs: CourseTab[] = [
 const aboutCourse = {
   title: 'SOBRE O CURSO DE ENFERMAGEM',
   description:
-    'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque na área, que aliam conhecimentos teóricos e discussões sobre a prática profissional, com aprendizagem em foco.',
+    'A graduação em Enfermagem capacita especialistas para trabalhar na prevenção e no incentivo à saúde em diferentes contextos. Com duração de cinco anos, habilita para a atuação conjunta com demais profissionais do setor, aprimorando habilidades em assistência, gestão de fármacos, obtenção de informações clínicas e definição de condutas.',
   highlight:
-    'A cada disciplina, você contará com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque.',
+    'Oferece formação prática e prepara o aluno para atender às demandas sociais com excelência.',
   bullets: [
-    'Base teórica e prática equilibrada',
-    'Acompanhamento com docentes experientes',
-    'Conteúdo atualizado para a área da saúde',
-    'Formação orientada para a vida real',
+    'Capacitação para atuação integrada com outros profissionais da área',
+    'Se torne especialista em Enfermagem',
+    'Atue na prevenção e incentivo à saúde',
+    'Trabalhe em diferentes contextos e ambientes de saúde',
   ],
 }
 
-export function FooterSection() {
+type FooterSectionProps = {
+  onOpenPopup: () => void
+}
+
+export function FooterSection({ onOpenPopup }: FooterSectionProps) {
   const [activeTabId, setActiveTabId] = useState(courseTabs[0].id)
   const [isPinned, setIsPinned] = useState(false)
   const [shellHeight, setShellHeight] = useState(0)
@@ -240,9 +244,9 @@ export function FooterSection() {
           <div className="lp-course-about__media">
             <img
               src="/landing/course-about-image.png"
-              alt="Profissional de enfermagem orientando uma paciente"
-              width={550}
-              height={665}
+              alt="Alunos de enfermagem em treinamento prático"
+              width={430}
+              height={435}
             />
           </div>
 
@@ -259,6 +263,10 @@ export function FooterSection() {
                 </li>
               ))}
             </ul>
+
+            <button type="button" className="lp-course-about__cta" onClick={onOpenPopup}>
+              Saiba mais
+            </button>
           </div>
         </article>
       </div>

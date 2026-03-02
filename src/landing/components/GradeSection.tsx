@@ -9,7 +9,7 @@ type GradeItem = {
 
 const gradeItems: GradeItem[] = [
   {
-    term: '1º semestre',
+    term: '1° semestre',
     semesterName: 'Bases Biológicas e Sociais para o Cuidar da Enfermagem',
     totalHours: '360h',
     disciplines: [
@@ -23,7 +23,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '2º semestre',
+    term: '2° semestre',
     semesterName: 'Bases Biológicas e Sociais para o Cuidar da Enfermagem',
     totalHours: '360h',
     disciplines: [
@@ -37,7 +37,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '3º semestre',
+    term: '3° semestre',
     semesterName: 'Bases Biológicas e Sociais para o Cuidar da Enfermagem',
     totalHours: '360h',
     disciplines: [
@@ -51,7 +51,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '4º semestre',
+    term: '4° semestre',
     semesterName: 'Fundamentação para o Cuidar da Enfermagem',
     totalHours: '360h',
     disciplines: [
@@ -65,7 +65,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '5º semestre',
+    term: '5° semestre',
     semesterName: 'Fundamentação para o Cuidar da Enfermagem',
     totalHours: '360h',
     disciplines: [
@@ -78,7 +78,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '6º semestre',
+    term: '6° semestre',
     semesterName: 'Processo de Cuidar da Enfermagem nos Ciclos da Vida',
     totalHours: '410h',
     disciplines: [
@@ -90,7 +90,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '7º semestre',
+    term: '7° semestre',
     semesterName: 'Processo de Cuidar da Enfermagem nos Ciclos da Vida',
     totalHours: '410h',
     disciplines: [
@@ -103,7 +103,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '8º semestre',
+    term: '8° semestre',
     semesterName: 'Processo de Cuidar da Enfermagem nos Ciclos da Vida',
     totalHours: '360h',
     disciplines: [
@@ -116,7 +116,7 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '9º semestre',
+    term: '9° semestre',
     semesterName: 'Vivência no Processo de Cuidar da Enfermagem',
     totalHours: '508h',
     disciplines: [
@@ -126,17 +126,19 @@ const gradeItems: GradeItem[] = [
     ],
   },
   {
-    term: '10º semestre',
+    term: '10° semestre',
     semesterName: 'Vivência no Processo de Cuidar da Enfermagem',
     totalHours: '560h',
-    disciplines: [
-      'Estágio Curricular Supervisionado II',
-    ],
+    disciplines: ['Estágio Curricular Supervisionado II'],
   },
 ]
 
-export function GradeSection() {
-  const [openTerm, setOpenTerm] = useState<string | null>(null)
+type GradeSectionProps = {
+  onOpenPopup: () => void
+}
+
+export function GradeSection({ onOpenPopup }: GradeSectionProps) {
+  const [openTerm, setOpenTerm] = useState<string | null>(gradeItems[2]?.term ?? null)
 
   return (
     <section id="grade-curricular" className="lp-grade">
@@ -167,7 +169,7 @@ export function GradeSection() {
                 className={`lp-grade__panel ${openTerm === item.term ? 'is-open' : ''}`}
                 hidden={openTerm !== item.term}
               >
-                <h3 className="lp-grade__panel-title">Disciplinas</h3>
+                <h3 className="lp-grade__panel-title">Disciplinas:</h3>
                 <ul>
                   {item.disciplines.map((detail) => (
                     <li key={detail}>{detail}</li>
@@ -177,6 +179,10 @@ export function GradeSection() {
             </article>
           ))}
         </div>
+
+        <button type="button" className="lp-grade__cta" onClick={onOpenPopup}>
+          Saiba mais
+        </button>
       </div>
     </section>
   )

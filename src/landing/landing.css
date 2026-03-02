@@ -486,8 +486,41 @@
   color: #070707;
 }
 
-.lp-program__title {
+.lp-program__location {
+  width: fit-content;
+  min-height: 44px;
+  border: 2px solid #001b2d;
+  border-radius: 38px;
+  padding: 8px 14px 8px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lp-program__location-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.lp-program__location-text {
   margin: 0;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 20px;
+  line-height: 31.115px;
+  color: #001b2d;
+}
+
+.lp-program__location-text strong {
+  font-weight: 600;
+}
+
+.lp-program__location-text span {
+  font-weight: 300;
+}
+
+.lp-program__title {
+  margin: 16px 0 0;
   max-width: 418px;
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 30px;
@@ -500,9 +533,9 @@
   margin: 12px 0 0;
   max-width: 462px;
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 300;
-  line-height: 30px;
+  line-height: 25px;
   color: #070707;
 }
 
@@ -523,7 +556,7 @@
   width: 51px;
   height: 51px;
   border-radius: 60px;
-  background: #d9f3ec;
+  background: #2ff4bc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -557,7 +590,7 @@
 }
 
 .lp-program__knowledge {
-  margin-top: 75px;
+  margin-top: 43px;
 }
 
 .lp-program__knowledge strong {
@@ -577,27 +610,15 @@
 }
 
 .lp-program__tag {
+  border: 1.5px solid #8bffde;
+  background: transparent;
   border-radius: 15px;
   padding: 7px 15px;
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 18px;
   font-weight: 600;
   line-height: 30px;
-}
-
-.lp-program__tag--strong {
-  background: #d9f3ec;
-  color: #003123;
-}
-
-.lp-program__tag--medium {
-  background: rgba(143, 208, 191, 0.35);
-  color: #0f4c3b;
-}
-
-.lp-program__tag--soft {
-  background: rgba(17, 167, 125, 0.25);
-  color: #036e50;
+  color: #070707;
 }
 
 .lp-program__media {
@@ -722,7 +743,7 @@
 
 .lp-course-about__media {
   width: 430px;
-  height: 435px;
+  height: 469px;
   border-radius: 20px;
   overflow: hidden;
   flex-shrink: 0;
@@ -756,7 +777,7 @@
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 18px;
   font-weight: 400;
-  line-height: 30px;
+  line-height: 28px;
 }
 
 .lp-course-about__highlight {
@@ -772,25 +793,25 @@
 }
 
 .lp-course-about__bullets {
-  margin: 96px 0 0;
+  margin: 14px 0 0;
   padding: 0;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 20px;
-  row-gap: 10px;
+  column-gap: 16px;
+  row-gap: 14px;
 }
 
 .lp-course-about__bullets li {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  min-height: 34px;
+  min-height: 39px;
   min-width: 0;
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 18px;
   font-weight: 500;
-  line-height: 30px;
+  line-height: 22px;
   color: #082628;
   white-space: normal;
 }
@@ -808,14 +829,62 @@
   overflow-wrap: anywhere;
 }
 
+.lp-course-about__cta {
+  margin-top: 14px;
+  width: 175px;
+  height: 50px;
+  border: 0;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 31.115px;
+  color: #011d2e;
+  text-decoration: none;
+  background: #2ff4bc;
+  cursor: pointer;
+}
+
+.lp-course-about__cta:hover,
+.lp-course-about__cta:focus-visible {
+  filter: brightness(0.96);
+}
+
+.lp-course-about__cta:focus-visible {
+  outline: 2px solid rgba(1, 29, 46, 0.25);
+  outline-offset: 3px;
+}
+
 .lp-profile-banner {
-  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #34d9b6;
   padding: 70px 0 40px;
+  margin: 40px 0 0px;
+}
+
+.lp-profile-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: exclusion;
+  background-image: url('/landing/perfil-banner-fundo.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .lp-profile-banner__inner {
   width: min(1240px, 100% - 2rem);
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .lp-profile-banner__image {
@@ -908,15 +977,15 @@
 }
 
 .lp-grade__list {
-  margin-top: 47px;
+  margin-top: 45px;
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 12px;
 }
 
 .lp-grade__row {
   border-radius: 20px;
-  background: rgba(3, 178, 128, 0.15);
+  background: #061e20;
   overflow: hidden;
 }
 
@@ -925,12 +994,12 @@
   min-height: 100px;
   border: 0;
   border-radius: 0;
-  background: transparent;
-  padding: 20px 30px;
+  background: #061e20;
+  padding: 25px 30px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
-  column-gap: 24px;
+  column-gap: 20px;
   text-align: left;
   cursor: pointer;
 }
@@ -938,29 +1007,29 @@
 .lp-grade__term {
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 26px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 30px;
-  color: #061e20;
+  color: #4cf8c7;
   white-space: nowrap;
 }
 
 .lp-grade__subject {
   min-width: 0;
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 500;
   line-height: 30px;
-  color: #061e20;
+  color: #ffffff;
   overflow-wrap: anywhere;
 }
 
 .lp-grade__workload {
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 26px;
+  font-weight: 600;
   line-height: 30px;
-  color: #061e20;
-  opacity: 0.88;
+  color: #ffffff;
+  opacity: 0.9;
   white-space: nowrap;
 }
 
@@ -988,32 +1057,62 @@
 }
 
 .lp-grade__panel {
-  padding: 0 30px 22px;
-  border-top: 1px solid rgba(6, 30, 32, 0.15);
+  padding: 0 30px 30px;
+  border-top: 0;
 }
 
 .lp-grade__panel-title {
-  margin: 14px 0 0;
+  margin: 0;
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  line-height: 1.2;
-  color: #061e20;
+  line-height: 30px;
+  color: #ffffff;
 }
 
 .lp-grade__panel ul {
-  margin: 12px 0 0;
-  padding-left: 1.25rem;
-  display: grid;
-  gap: 6px;
+  margin: 4px 0 0;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .lp-grade__panel li {
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
-  line-height: 1.35;
-  color: #061e20;
+  line-height: 30px;
+  color: #ffffff;
+}
+
+.lp-grade__cta {
+  margin: 20px auto 0;
+  width: 175px;
+  height: 50px;
+  border: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 31.115px;
+  color: #011d2e;
+  text-decoration: none;
+  background: #4cf8c7;
+  cursor: pointer;
+}
+
+.lp-grade__cta:hover,
+.lp-grade__cta:focus-visible {
+  filter: brightness(0.96);
+}
+
+.lp-grade__cta:focus-visible {
+  outline: 2px solid rgba(1, 29, 46, 0.25);
+  outline-offset: 3px;
 }
 
 .lp-health {
@@ -1201,7 +1300,7 @@
 }
 
 .lp-faq-cta {
-  background: #d9f4ec;
+  background: #2ff4bc;
   padding: 80px 0;
 }
 
@@ -1216,10 +1315,11 @@
 .lp-faq-cta__title {
   margin: 0;
   text-align: center;
-  font-family: 'Liberation Sans', Arial, sans-serif;
-  font-size: 36px;
-  font-weight: 700;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 30px;
+  font-weight: 800;
   line-height: 40px;
+  letter-spacing: -0.9px;
   color: #061e20;
   text-transform: uppercase;
 }
@@ -1248,7 +1348,7 @@
   justify-content: space-between;
   gap: 12px;
   font-family: 'Liberation Sans', Arial, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 24px;
   color: #ffffff;
@@ -1276,7 +1376,7 @@
 .lp-faq-cta__answer p {
   margin: 12px 0 0;
   font-family: 'Liberation Sans', Arial, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.45;
   color: rgba(255, 255, 255, 0.9);
@@ -1754,12 +1854,29 @@
     width: 100%;
   }
 
+  .lp-program__location {
+    max-width: 100%;
+    min-height: 40px;
+    padding: 6px 12px 6px 8px;
+    gap: 8px;
+  }
+
+  .lp-program__location-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lp-program__location-text {
+    font-size: 17px;
+    line-height: 1.3;
+  }
+
   .lp-program__title {
     font-size: clamp(28px, 4vw, 30px);
   }
 
   .lp-program__subtitle {
-    font-size: clamp(20px, 3.2vw, 22px);
+    font-size: clamp(18px, 3.2vw, 20px);
     line-height: 1.35;
   }
 
@@ -1833,14 +1950,23 @@
     line-height: 1.6;
   }
 
+  .lp-course-about__highlight {
+    margin-top: 12px;
+  }
+
   .lp-course-about__bullets {
-    margin-top: 32px;
+    margin-top: 16px;
     grid-template-columns: 1fr;
-    row-gap: 8px;
+    row-gap: 10px;
   }
 
   .lp-course-about__bullets li {
     white-space: normal;
+  }
+
+  .lp-course-about__cta {
+    margin-top: 16px;
+    width: 175px;
   }
 
   .lp-profile-banner {
@@ -1869,28 +1995,37 @@
   .lp-grade__item {
     min-height: 88px;
     padding: 16px 20px;
-    column-gap: 18px;
+    display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto auto;
+    column-gap: 14px;
   }
 
   .lp-grade__term,
   .lp-grade__subject,
   .lp-grade__workload {
-    font-size: 20px;
-    line-height: 1.25;
+    font-size: 24px;
+    line-height: 1.2;
   }
 
   .lp-grade__panel {
-    padding: 0 20px 16px;
+    padding: 0 20px 20px;
   }
 
   .lp-grade__panel-title {
-    margin-top: 12px;
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 1.35;
   }
 
   .lp-grade__panel li {
     font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .lp-grade__cta {
+    margin-top: 18px;
+    height: 48px;
+    font-size: 18px;
+    line-height: 1.2;
   }
 
   .lp-health {
@@ -2064,7 +2199,25 @@
 
   .lp-program__subtitle {
     margin-top: 10px;
-    font-size: 22px;
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .lp-program__location {
+    min-height: 36px;
+    padding: 5px 10px 5px 8px;
+    gap: 6px;
+    border-radius: 30px;
+  }
+
+  .lp-program__location-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .lp-program__location-text {
+    font-size: 14px;
+    line-height: 1.25;
   }
 
   .lp-program__meta {
@@ -2138,7 +2291,7 @@
   }
 
   .lp-course-about__bullets {
-    margin-top: 22px;
+    margin-top: 14px;
   }
 
   .lp-course-about__bullets li {
@@ -2149,6 +2302,15 @@
   .lp-course-about__bullets li img {
     width: 30px;
     height: 30px;
+  }
+
+  .lp-course-about__cta {
+    height: 46px;
+    padding: 0 24px;
+    width: auto;
+    min-width: 150px;
+    font-size: 18px;
+    line-height: 1.2;
   }
 
   .lp-profile-banner {
@@ -2203,8 +2365,9 @@
   .lp-grade__item {
     min-height: 76px;
     padding: 14px 14px 14px 16px;
-    column-gap: 10px;
+    display: grid;
     grid-template-columns: minmax(0, 1fr) auto auto;
+    column-gap: 10px;
     row-gap: 4px;
   }
 
@@ -2245,19 +2408,28 @@
   }
 
   .lp-grade__panel-title {
-    margin-top: 10px;
     font-size: 18px;
-    line-height: 1.25;
+    line-height: 1.35;
   }
 
   .lp-grade__panel ul {
-    margin-top: 10px;
+    margin-top: 8px;
     padding-left: 1rem;
   }
 
   .lp-grade__panel li {
     font-size: 15px;
-    line-height: 1.35;
+    line-height: 1.45;
+  }
+
+  .lp-grade__cta {
+    margin-top: 16px;
+    height: 46px;
+    width: auto;
+    min-width: 150px;
+    padding: 0 24px;
+    font-size: 18px;
+    line-height: 1.2;
   }
 
   .lp-health {
