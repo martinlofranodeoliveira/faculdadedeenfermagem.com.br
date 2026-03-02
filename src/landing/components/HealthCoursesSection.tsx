@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import type { CourseLeadSelection } from '../crmLead'
 import {
   POS_COURSES_ENDPOINT,
-  isHealthArea,
+  filterNursingPostCourses,
+  getNursingPostCourseFallback,
   parsePostGraduationCourses,
   type PostCourse,
 } from '../postCourses'
@@ -20,45 +21,6 @@ type HealthCourse = {
 type HealthCoursesSectionProps = {
   onOpenCoursePopup: (selection: CourseLeadSelection) => void
 }
-
-const fallbackHealthCourses: HealthCourse[] = [
-  {
-    id: 'fallback-pos-urgencia-emergencia',
-    title: 'URGÊNCIA E EMERGÊNCIA',
-    currentPrice: '18X R$ 66,00/MÊS',
-    oldPrice: '18X R$ 132,00',
-    showCoren: true,
-    selection: {
-      courseType: 'pos',
-      courseValue: 'pos-urgencia-emergencia',
-      courseLabel: 'Urgência e Emergência',
-    },
-  },
-  {
-    id: 'fallback-pos-enfermagem-trabalho',
-    title: 'ENFERMAGEM DO TRABALHO',
-    currentPrice: '18X R$ 66,00/MÊS',
-    oldPrice: '18X R$ 132,00',
-    showCoren: true,
-    selection: {
-      courseType: 'pos',
-      courseValue: 'pos-enfermagem-trabalho',
-      courseLabel: 'Enfermagem do Trabalho',
-    },
-  },
-  {
-    id: 'fallback-pos-uti',
-    title: 'ENFERMAGEM EM UTI',
-    currentPrice: '18X R$ 66,00/MÊS',
-    oldPrice: '18X R$ 132,00',
-    showCoren: true,
-    selection: {
-      courseType: 'pos',
-      courseValue: 'pos-enfermagem-uti',
-      courseLabel: 'Enfermagem em UTI',
-    },
-  },
-]
 
 function normalizeText(value: string): string {
   return value.replace(/\s+/g, ' ').trim()
@@ -104,6 +66,10 @@ function mapPostCourseToHealthCard(course: PostCourse): HealthCourse {
   }
 }
 
+const fallbackHealthCourses: HealthCourse[] = getNursingPostCourseFallback().map(
+  mapPostCourseToHealthCard,
+)
+
 export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSectionProps) {
   const [healthCourses, setHealthCourses] = useState<HealthCourse[]>(fallbackHealthCourses)
 
@@ -126,10 +92,9 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
         }
 
         const rawText = await response.text()
-        const parsedCourses = parsePostGraduationCourses(rawText)
-        const parsedHealthCourses = parsedCourses
-          .filter((course) => isHealthArea(course.area))
-          .map(mapPostCourseToHealthCard)
+        const parsedHealthCourses = filterNursingPostCourses(
+          parsePostGraduationCourses(rawText),
+        ).map(mapPostCourseToHealthCard)
 
         if (!isMounted || parsedHealthCourses.length === 0) {
           return

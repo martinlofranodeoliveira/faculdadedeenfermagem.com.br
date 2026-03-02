@@ -143,7 +143,7 @@ export async function sendLeadToCrm({
   const phoneDigits = normalizePhone(phone)
   const isPostGraduation =
     selection.courseType === 'pos' || isPostGraduationCourse(selection.courseValue)
-  const empresaId = parseEnvInteger(import.meta.env.VITE_CRM_EMPRESA, 9)
+  const empresaId = parseEnvInteger(import.meta.env.VITE_CRM_EMPRESA, 10)
   const etapaGrad = parseEnvInteger(import.meta.env.VITE_CRM_ETAPA_GRAD, 50)
   const funilGrad = parseEnvInteger(import.meta.env.VITE_CRM_FUNIL_GRAD, 5)
   const funilPos = parseEnvInteger(import.meta.env.VITE_CRM_FUNIL_POS, 5)

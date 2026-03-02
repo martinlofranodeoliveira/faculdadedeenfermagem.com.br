@@ -11,8 +11,12 @@ import {
   validatePhone,
   type CourseType,
 } from '../crmLead'
-import { formCourseGroups } from '../data'
-import { POS_COURSES_ENDPOINT, parsePostGraduationCourses } from '../postCourses'
+import {
+  POS_COURSES_ENDPOINT,
+  filterNursingPostCourses,
+  getNursingPostCourseFallback,
+  parsePostGraduationCourses,
+} from '../postCourses'
 
 type FormStep = 1 | 2 | 3
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
@@ -32,6 +36,13 @@ const COURSE_TYPE_OPTIONS: Array<{ value: CourseType; label: string }> = [
   { value: 'graduacao', label: 'Graduação' },
   { value: 'pos', label: 'Pós-graduação EAD' },
 ]
+
+const DEFAULT_GRADUATION_OPTION: CourseOption = {
+  value: 'graduacao-enfermagem',
+  label: 'Graduação em Enfermagem Presencial',
+}
+
+const GRADUATION_COURSE_OPTIONS: CourseOption[] = [DEFAULT_GRADUATION_OPTION]
 
 const STEP_FIELDS: Record<FormStep, FieldName[]> = {
   1: ['courseType', 'course'],
@@ -81,14 +92,21 @@ function inferCourseTypeFromValue(value: string): CourseType {
 
 export function CourseSection() {
   const [step, setStep] = useState<FormStep>(1)
-  const [courseType, setCourseType] = useState<CourseType | ''>('')
-  const [course, setCourse] = useState('')
-  const [courseSearch, setCourseSearch] = useState('')
+  const [courseType, setCourseType] = useState<CourseType | ''>('graduacao')
+  const [course, setCourse] = useState(DEFAULT_GRADUATION_OPTION.value)
+  const [courseSearch, setCourseSearch] = useState(DEFAULT_GRADUATION_OPTION.label)
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [isCourseSearchOpen, setIsCourseSearchOpen] = useState(false)
-  const [postCourseOptions, setPostCourseOptions] = useState<CourseOption[]>([])
+  const [postCourseOptions, setPostCourseOptions] = useState<CourseOption[]>(
+    () =>
+      getNursingPostCourseFallback().map((courseItem) => ({
+        value: courseItem.value,
+        label: courseItem.label,
+        courseId: courseItem.courseId,
+      })),
+  )
   const [postCourseStatus, setPostCourseStatus] = useState<PostCourseStatus>('idle')
   const [postCourseErrorMessage, setPostCourseErrorMessage] = useState('')
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
@@ -114,11 +132,13 @@ export function CourseSection() {
       }
 
       const rawText = await response.text()
-      const parsedCourses = parsePostGraduationCourses(rawText).map((courseItem) => ({
-        value: courseItem.value,
-        label: courseItem.label,
-        courseId: courseItem.courseId,
-      }))
+      const parsedCourses = filterNursingPostCourses(parsePostGraduationCourses(rawText)).map(
+        (courseItem) => ({
+          value: courseItem.value,
+          label: courseItem.label,
+          courseId: courseItem.courseId,
+        }),
+      )
 
       if (!parsedCourses.length) {
         throw new Error('No post-graduation courses were parsed from the API response')
@@ -128,7 +148,6 @@ export function CourseSection() {
       setPostCourseStatus('success')
     } catch (error) {
       console.error('Erro ao carregar cursos de pós-graduação da API:', error)
-      setPostCourseOptions([])
       setPostCourseStatus('error')
       setPostCourseErrorMessage('Não foi possível carregar os cursos de Pós-graduação no momento.')
     }
@@ -138,9 +157,7 @@ export function CourseSection() {
     void loadPostCourses()
   }, [loadPostCourses])
 
-  const allCourseOptions = useMemo<CourseOption[]>(() => {
-    return formCourseGroups.flatMap((group) => group.options)
-  }, [])
+  const allCourseOptions = useMemo<CourseOption[]>(() => GRADUATION_COURSE_OPTIONS, [])
 
   const courseOptionsByType = useMemo<Record<CourseType, CourseOption[]>>(() => {
     return {
@@ -197,6 +214,7 @@ export function CourseSection() {
 
   const isPostCoursesLoading = courseType === 'pos' && postCourseStatus === 'loading'
   const isCourseSearchDisabled = !courseType || isPostCoursesLoading
+  const isGraduationCourseLocked = courseType === 'graduacao'
 
   const courseTypeInvalid = Boolean(touched.courseType && fieldErrors.courseType)
   const courseInvalid = Boolean(touched.course && fieldErrors.course)
@@ -345,9 +363,9 @@ export function CourseSection() {
       setSubmitStatus('success')
       setSubmitMessage('Cadastro enviado com sucesso. Em breve entraremos em contato.')
       setStep(1)
-      setCourseType('')
-      setCourse('')
-      setCourseSearch('')
+      setCourseType('graduacao')
+      setCourse(DEFAULT_GRADUATION_OPTION.value)
+      setCourseSearch(DEFAULT_GRADUATION_OPTION.label)
       setFullName('')
       setEmail('')
       setPhone('')
@@ -394,9 +412,14 @@ export function CourseSection() {
                       value={courseType}
                       onValueChange={(value) => {
                         const nextType = value as CourseType
+                        const nextCourseValue =
+                          nextType === 'graduacao' ? DEFAULT_GRADUATION_OPTION.value : ''
+                        const nextCourseLabel =
+                          nextType === 'graduacao' ? DEFAULT_GRADUATION_OPTION.label : ''
+
                         setCourseType(nextType)
-                        setCourse('')
-                        setCourseSearch('')
+                        setCourse(nextCourseValue)
+                        setCourseSearch(nextCourseLabel)
                         setIsCourseSearchOpen(false)
 
                         if (touched.courseType) {
@@ -404,7 +427,7 @@ export function CourseSection() {
                         }
 
                         if (touched.course) {
-                          applyFieldValidation('course', '')
+                          applyFieldValidation('course', nextCourseValue)
                         }
                       }}
                     >
@@ -454,11 +477,13 @@ export function CourseSection() {
                     placeholder="Busque o curso"
                     value={courseSearch}
                     disabled={isCourseSearchDisabled}
+                    readOnly={isGraduationCourseLocked}
                     autoComplete="off"
                     aria-invalid={courseInvalid}
                     aria-describedby={courseInvalid ? 'lead-course-error' : undefined}
+                    aria-readonly={isGraduationCourseLocked}
                     onFocus={() => {
-                      if (courseType) {
+                      if (courseType && !isGraduationCourseLocked) {
                         setIsCourseSearchOpen(true)
                       }
                     }}
@@ -466,6 +491,13 @@ export function CourseSection() {
                       markTouched('course')
                       window.setTimeout(() => {
                         setIsCourseSearchOpen(false)
+
+                        if (isGraduationCourseLocked) {
+                          setCourse(DEFAULT_GRADUATION_OPTION.value)
+                          setCourseSearch(DEFAULT_GRADUATION_OPTION.label)
+                          applyFieldValidation('course', DEFAULT_GRADUATION_OPTION.value)
+                          return
+                        }
 
                         const normalizedSearch = normalizeComparableText(courseSearch)
                         if (!course && normalizedSearch) {
@@ -484,6 +516,10 @@ export function CourseSection() {
                       }, 110)
                     }}
                     onChange={(event) => {
+                      if (isGraduationCourseLocked) {
+                        return
+                      }
+
                       const value = event.target.value
                       setCourseSearch(value)
                       setIsCourseSearchOpen(Boolean(courseType))
@@ -515,7 +551,7 @@ export function CourseSection() {
                   />
                 </label>
 
-                {isCourseSearchOpen && courseType ? (
+                {isCourseSearchOpen && courseType && !isGraduationCourseLocked ? (
                   <div
                     className="lp-lead__course-search-menu"
                     role="listbox"
