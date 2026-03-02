@@ -120,7 +120,7 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
         <header className="lp-health__header">
           <h2 className="lp-health__title">PÓS EAD NA ÁREA DA SAÚDE</h2>
           <p className="lp-health__subtitle">
-            Explore nossos cursos e encontre o caminho ideal para sua carreira.
+          Enfermeiros pós-graduados recebem salários até 2x maiores
           </p>
         </header>
 

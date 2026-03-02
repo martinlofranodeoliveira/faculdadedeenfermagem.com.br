@@ -360,18 +360,8 @@ export function CourseSection() {
         },
       })
 
-      setSubmitStatus('success')
-      setSubmitMessage('Cadastro enviado com sucesso. Em breve entraremos em contato.')
-      setStep(1)
-      setCourseType('graduacao')
-      setCourse(DEFAULT_GRADUATION_OPTION.value)
-      setCourseSearch(DEFAULT_GRADUATION_OPTION.label)
-      setFullName('')
-      setEmail('')
-      setPhone('')
-      setIsCourseSearchOpen(false)
-      setFieldErrors({})
-      setTouched(EMPTY_TOUCHED)
+      window.location.assign('/obrigado')
+      return
     } catch (error) {
       console.error('Erro ao enviar lead para o CRM:', error)
       setSubmitStatus('error')
@@ -760,3 +750,4 @@ export function CourseSection() {
     </section>
   )
 }
+

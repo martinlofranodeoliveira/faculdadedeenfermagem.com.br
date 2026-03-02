@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;600;700;800&display=swap');
+
+.thanks-page {
+  min-height: 100vh;
+  margin: 0;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: 'Kumbh Sans', 'Segoe UI', Arial, sans-serif;
+  background: #00192b url('/landing/obrigado-background.png') center / cover no-repeat;
+}
+
+.thanks-shell {
+  width: min(640px, 100%);
+  display: grid;
+  justify-items: center;
+}
+
+.thanks-card {
+  width: min(565px, 100%);
+  border-radius: 30px;
+  background: #001a2d;
+  padding: 34px 60px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  text-align: center;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.24);
+}
+
+.thanks-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.thanks-brand__mark {
+  width: 24px;
+  height: 38px;
+  display: block;
+}
+
+.thanks-brand__text {
+  text-align: left;
+  color: #ffffff;
+  display: grid;
+  gap: 0;
+  line-height: 1;
+}
+
+.thanks-brand__text span {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.thanks-brand__text strong {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.thanks-card h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(52px, 8vw, 75px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.thanks-card p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.thanks-cta-shell {
+  margin-top: 22px;
+  width: min(324px, 100%);
+  border: 1.5px solid #4cf8c7;
+  border-radius: 14px;
+  padding: 7px 9px;
+  background: rgba(0, 26, 45, 0.45);
+}
+
+.thanks-cta {
+  width: 100%;
+  min-height: 50px;
+  border-radius: 12px;
+  background: #4cf8c7;
+  color: #011d2e;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.55;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: filter 180ms ease;
+}
+
+.thanks-cta:hover,
+.thanks-cta:focus-visible {
+  filter: brightness(0.96);
+}
+
+.thanks-cta:focus-visible {
+  outline: 2px solid rgba(76, 248, 199, 0.7);
+  outline-offset: 3px;
+}
+
+.thanks-cta span {
+  font-size: 24px;
+  line-height: 1;
+  margin-top: -1px;
+}
+
+@media (max-width: 900px) {
+  .thanks-card {
+    border-radius: 24px;
+    padding: 28px 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .thanks-page {
+    padding: 16px;
+    align-items: center;
+  }
+
+  .thanks-card {
+    border-radius: 20px;
+    padding: 24px 18px;
+    gap: 10px;
+  }
+
+  .thanks-brand {
+    gap: 8px;
+  }
+
+  .thanks-brand__mark {
+    width: 20px;
+    height: 32px;
+  }
+
+  .thanks-brand__text span {
+    font-size: 10px;
+  }
+
+  .thanks-brand__text strong {
+    font-size: 16px;
+  }
+
+  .thanks-card p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .thanks-cta-shell {
+    margin-top: 16px;
+    width: min(320px, 100%);
+  }
+
+  .thanks-cta {
+    min-height: 46px;
+    font-size: 17px;
+  }
+
+  .thanks-cta span {
+    font-size: 20px;
+  }
+}
+
