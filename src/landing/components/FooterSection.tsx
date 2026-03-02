@@ -17,14 +17,14 @@ const courseTabs: CourseTab[] = [
 const aboutCourse = {
   title: 'SOBRE O CURSO DE ENFERMAGEM',
   description:
-    'A graduação em Enfermagem capacita especialistas para trabalhar na prevenção e no incentivo à saúde em diferentes contextos. Com duração de cinco anos, habilita para a atuação conjunta com demais profissionais do setor, aprimorando habilidades em assistência, gestão de fármacos, obtenção de informações clínicas e definição de condutas.',
+    'A cada disciplina, voc\u00ea contar\u00e1 com leituras digitais, slides, videoaulas e podcasts preparados por professores de destaque na \u00e1rea, que aliam conhecimentos te\u00f3ricos e discuss\u00f5es sobre a pr\u00e1tica profissional, como aprendizagem em foco.',
   highlight:
-    'Oferece formação prática e prepara o aluno para atender às demandas sociais com excelência.',
+    'Oferece forma\u00e7\u00e3o pr\u00e1tica e prepara o aluno para atender \u00e0s demandas sociais com excel\u00eancia.',
   bullets: [
-    'Capacitação para atuação integrada com outros profissionais da área',
+    'Capacita\u00e7\u00e3o para atua\u00e7\u00e3o integrada com outros profissionais da \u00e1rea',
+    'Atue na preven\u00e7\u00e3o e incentivo \u00e0 sa\u00fade',
     'Se torne especialista em Enfermagem',
-    'Atue na prevenção e incentivo à saúde',
-    'Trabalhe em diferentes contextos e ambientes de saúde',
+    'Trabalhe em diferentes contextos e ambientes de sa\u00fade',
   ],
 }
 
@@ -273,3 +273,4 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
     </section>
   )
 }
+
