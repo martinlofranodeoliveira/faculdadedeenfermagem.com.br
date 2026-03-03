@@ -34,9 +34,12 @@ export function MarketSection() {
             <article key={card.image} className="lp-market__card">
               <img src={card.image} alt={card.alt} width={392} height={240} />
               <div className="lp-market__salary">
-                <span className="lp-market__salary-icon" aria-hidden="true">
-                  $
-                </span>
+                <img
+                  className="lp-market__salary-icon"
+                  src="/landing/market-salary-paid.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <span className="lp-market__salary-text">{card.salary}</span>
               </div>
               <h3>{card.title}</h3>

@@ -1069,37 +1069,31 @@
 }
 
 .lp-market__salary {
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   border-radius: 29px;
-  background: #2ff4bc;
-  padding: 4px 10px;
+  border: 1px solid #1aa88c;
+  background: transparent;
+  padding: 4px 7px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 4px;
 }
 
 .lp-market__salary-icon {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
-  background: #061e20;
-  color: #2ff4bc;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1;
+  display: block;
+  flex-shrink: 0;
 }
 
 .lp-market__salary-text {
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 15.176px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.45;
-  color: #000000;
+  color: #1aa88c;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -2798,7 +2792,10 @@
   }
 
   .lp-market__salary {
+    width: fit-content;
     border-radius: 23px;
+    border: 1px solid #1aa88c;
+    background: transparent;
     padding: 4px 8px;
     gap: 6px;
   }
@@ -2806,12 +2803,13 @@
   .lp-market__salary-icon {
     width: 18px;
     height: 18px;
-    font-size: 11px;
   }
 
   .lp-market__salary-text {
     font-size: 11px;
     line-height: 1.4;
+    color: #1aa88c;
+    font-weight: 600;
     white-space: nowrap;
   }
 
