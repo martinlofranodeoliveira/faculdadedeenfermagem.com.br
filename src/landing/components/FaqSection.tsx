@@ -1,4 +1,8 @@
-﻿export function FaqSection() {
+type FaqSectionProps = {
+  onOpenPopup: () => void
+}
+
+export function FaqSection({ onOpenPopup }: FaqSectionProps) {
   return (
     <section id="graduacao" className="lp-program">
       <div className="lp-program__inner">
@@ -48,19 +52,14 @@
               </div>
               <div className="lp-program__meta-text">
                 <strong>Início das aulas:</strong>
-                <span>01/07/2026</span>
+                <span>01/07/26</span>
               </div>
             </div>
           </div>
 
-          <div className="lp-program__knowledge">
-            <strong>Área de conhecimento:</strong>
-            <div className="lp-program__tags">
-              <span className="lp-program__tag">Saúde</span>
-              <span className="lp-program__tag">Assistência</span>
-              <span className="lp-program__tag">Pessoas</span>
-            </div>
-          </div>
+          <button type="button" className="lp-program__cta" onClick={onOpenPopup}>
+            Saiba mais
+          </button>
         </div>
 
         <div className="lp-program__media">
