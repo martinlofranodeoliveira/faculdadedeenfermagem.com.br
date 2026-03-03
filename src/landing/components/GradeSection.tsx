@@ -157,7 +157,6 @@ export function GradeSection({ onOpenPopup }: GradeSectionProps) {
                 onClick={() => setOpenTerm((current) => (current === item.term ? null : item.term))}
               >
                 <span className="lp-grade__term">{item.term}</span>
-                <span className="lp-grade__subject">{item.semesterName}</span>
                 <span className="lp-grade__workload">{item.totalHours}</span>
                 <span className="lp-grade__icon-wrap" aria-hidden="true">
                   <img src="/landing/grade-chevron.svg" alt="" />

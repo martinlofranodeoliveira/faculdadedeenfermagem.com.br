@@ -1097,7 +1097,7 @@
   background: #061e20;
   padding: 25px 30px;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
   column-gap: 20px;
   text-align: left;
@@ -1111,16 +1111,6 @@
   line-height: 30px;
   color: #4cf8c7;
   white-space: nowrap;
-}
-
-.lp-grade__subject {
-  min-width: 0;
-  font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 30px;
-  color: #ffffff;
-  overflow-wrap: anywhere;
 }
 
 .lp-grade__workload {
@@ -2105,12 +2095,11 @@
     min-height: 88px;
     padding: 16px 20px;
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     column-gap: 14px;
   }
 
   .lp-grade__term,
-  .lp-grade__subject,
   .lp-grade__workload {
     font-size: 24px;
     line-height: 1.2;
@@ -2719,19 +2708,13 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto auto;
     column-gap: 10px;
-    row-gap: 4px;
+    row-gap: 0;
   }
 
   .lp-grade__term {
     grid-column: 1 / 2;
     font-size: 20px;
     line-height: 1.2;
-  }
-
-  .lp-grade__subject {
-    grid-column: 1 / -1;
-    font-size: 18px;
-    line-height: 1.25;
   }
 
   .lp-grade__workload {
