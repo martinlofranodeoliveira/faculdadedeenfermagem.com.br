@@ -376,7 +376,11 @@ export function CourseSection() {
           />
         </div>
 
-        <form className="lp-lead__form" onSubmit={handleSubmit} noValidate>
+        <form
+          className={`lp-lead__form ${step === 1 ? 'lp-lead__form--step-1' : 'lp-lead__form--step-2'}`}
+          onSubmit={handleSubmit}
+          noValidate
+        >
           {step === 1 ? (
             <div className="lp-lead__row lp-lead__row--step-1">
               <div className="lp-lead__field-wrap lp-lead__field-wrap--modality">

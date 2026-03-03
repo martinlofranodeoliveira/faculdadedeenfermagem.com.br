@@ -158,6 +158,14 @@
   position: relative;
 }
 
+.lp-lead__form--step-1 {
+  width: 650px;
+}
+
+.lp-lead__form--step-2 {
+  width: 780px;
+}
+
 .lp-lead__row {
   width: 100%;
   display: grid;
