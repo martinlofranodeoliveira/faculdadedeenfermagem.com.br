@@ -1762,6 +1762,7 @@
   font-weight: 800;
   line-height: 1.3;
   color: #0b111f;
+  text-transform: uppercase;
 }
 
 .lp-enroll-popup__subtitle {
