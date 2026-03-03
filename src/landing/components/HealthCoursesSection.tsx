@@ -23,8 +23,8 @@ type HealthCoursesSectionProps = {
 }
 
 const MOBILE_HEALTH_COURSES_QUERY = '(max-width: 640px)'
-const MOBILE_HEALTH_PAGE_SIZE = 5
-const DESKTOP_HEALTH_PAGE_SIZE = 4
+const MOBILE_HEALTH_PAGE_SIZE = 6
+const DESKTOP_HEALTH_PAGE_SIZE = 6
 
 function normalizeText(value: string): string {
   return value.replace(/\s+/g, ' ').trim()
