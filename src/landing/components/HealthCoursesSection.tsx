@@ -22,6 +22,10 @@ type HealthCoursesSectionProps = {
   onOpenCoursePopup: (selection: CourseLeadSelection) => void
 }
 
+const MOBILE_HEALTH_COURSES_QUERY = '(max-width: 640px)'
+const MOBILE_HEALTH_PAGE_SIZE = 5
+const DESKTOP_HEALTH_PAGE_SIZE = 4
+
 function normalizeText(value: string): string {
   return value.replace(/\s+/g, ' ').trim()
 }
@@ -78,8 +82,19 @@ const fallbackHealthCourses: HealthCourse[] = getNursingPostCourseFallback().map
 const HEALTH_COURSES_NOTICE =
   'Os cursos atendem às normativas e exigências estabelecidas pelo COREN, assegurando conformidade com a legislação profissional vigente.'
 
+function getVisiblePageNumbers(currentPage: number, totalPages: number): number[] {
+  if (totalPages <= 3) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1)
+  }
+
+  const firstPage = Math.max(1, Math.min(currentPage - 1, totalPages - 2))
+  return [firstPage, firstPage + 1, firstPage + 2]
+}
+
 export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSectionProps) {
   const [healthCourses, setHealthCourses] = useState<HealthCourse[]>(fallbackHealthCourses)
+  const [isMobileLayout, setIsMobileLayout] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -122,6 +137,39 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const queryList = window.matchMedia(MOBILE_HEALTH_COURSES_QUERY)
+    const handleQueryChange = (event: MediaQueryListEvent) => {
+      setIsMobileLayout(event.matches)
+    }
+
+    setIsMobileLayout(queryList.matches)
+
+    if (typeof queryList.addEventListener === 'function') {
+      queryList.addEventListener('change', handleQueryChange)
+      return () => queryList.removeEventListener('change', handleQueryChange)
+    }
+
+    queryList.addListener(handleQueryChange)
+    return () => queryList.removeListener(handleQueryChange)
+  }, [])
+
+  const pageSize = isMobileLayout ? MOBILE_HEALTH_PAGE_SIZE : DESKTOP_HEALTH_PAGE_SIZE
+  const totalPages = Math.max(1, Math.ceil(healthCourses.length / pageSize))
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages)
+    }
+  }, [currentPage, totalPages])
+
+  const firstVisibleCourseIndex = (currentPage - 1) * pageSize
+  const visibleCourses = healthCourses.slice(firstVisibleCourseIndex, firstVisibleCourseIndex + pageSize)
+  const visibleCourseCount = Math.min(firstVisibleCourseIndex + visibleCourses.length, healthCourses.length)
+  const visiblePageNumbers = getVisiblePageNumbers(currentPage, totalPages)
+
   return (
     <section id="cursos-saude" className="lp-health">
       <div className="lp-health__inner">
@@ -135,7 +183,7 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
 
         <div className="lp-health__list-wrap">
           <div className="lp-health__list">
-            {healthCourses.map((course) => (
+            {visibleCourses.map((course) => (
               <article key={course.id} className="lp-health-card">
                 <div className="lp-health-card__content">
                   <div className="lp-health-card__tags">
@@ -171,6 +219,51 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
             ))}
           </div>
         </div>
+
+        {totalPages > 1 ? (
+          <nav className="lp-health__pager" aria-label="Paginação dos cursos de pós-graduação">
+            <div className="lp-health__pager-controls">
+              <button
+                type="button"
+                className="lp-health__pager-arrow"
+                onClick={() => setCurrentPage((previousPage) => Math.max(1, previousPage - 1))}
+                disabled={currentPage === 1}
+                aria-label="Página anterior"
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
+
+              <div className="lp-health__pager-pages">
+                {visiblePageNumbers.map((pageNumber) => (
+                  <button
+                    key={pageNumber}
+                    type="button"
+                    className={`lp-health__pager-page${pageNumber === currentPage ? ' is-active' : ''}`}
+                    onClick={() => setCurrentPage(pageNumber)}
+                    aria-current={pageNumber === currentPage ? 'page' : undefined}
+                    aria-label={`Ir para página ${pageNumber}`}
+                  >
+                    {pageNumber}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="lp-health__pager-arrow lp-health__pager-arrow--next"
+                onClick={() => setCurrentPage((previousPage) => Math.min(totalPages, previousPage + 1))}
+                disabled={currentPage === totalPages}
+                aria-label="Próxima página"
+              >
+                <span aria-hidden="true">›</span>
+              </button>
+            </div>
+
+            <p className="lp-health__pager-status" aria-live="polite">
+              {visibleCourseCount} de {healthCourses.length} cursos
+            </p>
+          </nav>
+        ) : null}
 
         <aside className="lp-health__notice" role="note" aria-label="Aviso sobre regulamentação dos cursos">
           <img

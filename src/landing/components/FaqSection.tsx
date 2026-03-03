@@ -71,6 +71,15 @@ export function FaqSection({ onOpenPopup }: FaqSectionProps) {
           />
         </div>
       </div>
+
+      <div className="lp-program__mobile-tabs-image">
+        <img
+          src="/landing/graduacao-section-image-mobile.png"
+          alt="Aluna de enfermagem no laboratório da graduação"
+          width={390}
+          height={247}
+        />
+      </div>
     </section>
   )
 }
