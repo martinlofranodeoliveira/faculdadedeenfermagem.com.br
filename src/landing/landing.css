@@ -2418,7 +2418,7 @@
 
   .lp-course-tabs__inner {
     width: min(362px, calc(100% - 28px));
-    padding: 7px 0 6px;
+    padding: 12px 0 6px;
   }
 
   .lp-course-tabs__nav {
