@@ -27,7 +27,12 @@ import {
 } from '../postCourses'
 
 type FormStep = 1 | 2
-type StepTransition = 'idle' | 'step-1-leaving' | 'step-2-entering'
+type StepTransition =
+  | 'idle'
+  | 'step-1-leaving'
+  | 'step-2-entering'
+  | 'step-2-leaving'
+  | 'step-1-entering'
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
 type PostCourseStatus = 'idle' | 'loading' | 'success' | 'error'
 
@@ -335,9 +340,25 @@ export function CourseSection() {
   }
 
   const handleStepBack = () => {
+    if (step !== 2 || isStepTransitioning) {
+      return
+    }
+
     clearStepTransitionTimers()
-    setStepTransition('idle')
-    setStep((Math.max(step - 1, 1) as FormStep))
+    setStepTransition('step-2-leaving')
+
+    stepExitTimeoutRef.current = window.setTimeout(() => {
+      setStep(1)
+      setStepTransition('step-1-entering')
+
+      stepEnterTimeoutRef.current = window.setTimeout(() => {
+        setStepTransition('idle')
+        stepEnterTimeoutRef.current = null
+      }, STEP_ENTER_DURATION_MS)
+
+      stepExitTimeoutRef.current = null
+    }, STEP_EXIT_DURATION_MS)
+
     setSubmitStatus('idle')
     setSubmitMessage('')
   }
@@ -440,7 +461,11 @@ export function CourseSection() {
           {step === 1 ? (
             <div
               className={`lp-lead__row lp-lead__row--step-1 ${
-                stepTransition === 'step-1-leaving' ? 'lp-lead__row--anim-exit-left' : ''
+                stepTransition === 'step-1-leaving'
+                  ? 'lp-lead__row--anim-exit-left'
+                  : stepTransition === 'step-1-entering'
+                    ? 'lp-lead__row--anim-enter-left'
+                    : ''
               }`}
             >
               <div className="lp-lead__field-wrap lp-lead__field-wrap--modality">
@@ -676,7 +701,11 @@ export function CourseSection() {
           {step === 2 ? (
             <div
               className={`lp-lead__row lp-lead__row--step-2 ${
-                stepTransition === 'step-2-entering' ? 'lp-lead__row--anim-enter-right' : ''
+                stepTransition === 'step-2-entering'
+                  ? 'lp-lead__row--anim-enter-right'
+                  : stepTransition === 'step-2-leaving'
+                    ? 'lp-lead__row--anim-exit-right'
+                    : ''
               }`}
             >
               <button

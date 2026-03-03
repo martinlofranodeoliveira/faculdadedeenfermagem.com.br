@@ -197,6 +197,14 @@
   animation: lpLeadStepEnterRight 260ms ease forwards;
 }
 
+.lp-lead__row--anim-exit-right {
+  animation: lpLeadStepExitRight 220ms ease forwards;
+}
+
+.lp-lead__row--anim-enter-left {
+  animation: lpLeadStepEnterLeft 260ms ease forwards;
+}
+
 @keyframes lpLeadStepExitLeft {
   from {
     opacity: 1;
@@ -210,6 +218,30 @@
 }
 
 @keyframes lpLeadStepEnterRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes lpLeadStepExitRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+}
+
+@keyframes lpLeadStepEnterLeft {
   from {
     opacity: 0;
     transform: translateX(-28px);
@@ -1884,7 +1916,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lp-lead__row--anim-exit-left,
-  .lp-lead__row--anim-enter-right {
+  .lp-lead__row--anim-enter-right,
+  .lp-lead__row--anim-exit-right,
+  .lp-lead__row--anim-enter-left {
     animation: none;
   }
 }
