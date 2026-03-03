@@ -158,6 +158,10 @@
   position: relative;
 }
 
+.lp-lead__form--transitioning {
+  pointer-events: none;
+}
+
 .lp-lead__form--step-1 {
   width: 650px;
 }
@@ -183,6 +187,38 @@
 
 .lp-lead__row--step-3 {
   grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr) auto;
+}
+
+.lp-lead__row--anim-exit-left {
+  animation: lpLeadStepExitLeft 220ms ease forwards;
+}
+
+.lp-lead__row--anim-enter-right {
+  animation: lpLeadStepEnterRight 260ms ease forwards;
+}
+
+@keyframes lpLeadStepExitLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+}
+
+@keyframes lpLeadStepEnterRight {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .lp-lead__field-wrap {
@@ -457,6 +493,17 @@
   padding: 0 18px;
   cursor: pointer;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.lp-lead__back-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+  transform: rotate(180deg);
 }
 
 .lp-lead__error {
@@ -1843,6 +1890,13 @@
 
 .lp-enroll-popup__status--error {
   color: #bc3f3f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-lead__row--anim-exit-left,
+  .lp-lead__row--anim-enter-right {
+    animation: none;
+  }
 }
 
 @media (max-width: 900px) {

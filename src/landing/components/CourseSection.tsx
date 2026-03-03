@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent, type UIEventHandler } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+  type UIEventHandler,
+} from 'react'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
@@ -19,6 +27,7 @@ import {
 } from '../postCourses'
 
 type FormStep = 1 | 2
+type StepTransition = 'idle' | 'step-1-leaving' | 'step-2-entering'
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
 type PostCourseStatus = 'idle' | 'loading' | 'success' | 'error'
 
@@ -58,6 +67,8 @@ const EMPTY_TOUCHED: Touched = {
 }
 
 const COURSE_SCROLL_PAGE_SIZE = 24
+const STEP_EXIT_DURATION_MS = 220
+const STEP_ENTER_DURATION_MS = 260
 
 function normalizeComparableText(value: string): string {
   return value
@@ -91,6 +102,7 @@ function inferCourseTypeFromValue(value: string): CourseType {
 
 export function CourseSection() {
   const [step, setStep] = useState<FormStep>(1)
+  const [stepTransition, setStepTransition] = useState<StepTransition>('idle')
   const [courseType, setCourseType] = useState<CourseType | ''>('graduacao')
   const [course, setCourse] = useState(DEFAULT_GRADUATION_OPTION.value)
   const [courseSearch, setCourseSearch] = useState(DEFAULT_GRADUATION_OPTION.label)
@@ -113,6 +125,8 @@ export function CourseSection() {
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
   const [visibleCourseCount, setVisibleCourseCount] = useState(COURSE_SCROLL_PAGE_SIZE)
+  const stepExitTimeoutRef = useRef<number | null>(null)
+  const stepEnterTimeoutRef = useRef<number | null>(null)
 
   const loadPostCourses = useCallback(async () => {
     setPostCourseStatus('loading')
@@ -155,6 +169,17 @@ export function CourseSection() {
   useEffect(() => {
     void loadPostCourses()
   }, [loadPostCourses])
+
+  useEffect(() => {
+    return () => {
+      if (stepExitTimeoutRef.current !== null) {
+        window.clearTimeout(stepExitTimeoutRef.current)
+      }
+      if (stepEnterTimeoutRef.current !== null) {
+        window.clearTimeout(stepEnterTimeoutRef.current)
+      }
+    }
+  }, [])
 
   const allCourseOptions = useMemo<CourseOption[]>(() => GRADUATION_COURSE_OPTIONS, [])
 
@@ -225,6 +250,18 @@ export function CourseSection() {
     step === 1 && submitStatus === 'error' && (courseTypeInvalid || courseInvalid)
   const stepOneInlineErrorMessage = fieldErrors.courseType ?? fieldErrors.course ?? ''
   const formLeadTitle = step === 1 ? 'Encontre seu Curso' : 'Informe os dados'
+  const isStepTransitioning = stepTransition !== 'idle'
+
+  const clearStepTransitionTimers = () => {
+    if (stepExitTimeoutRef.current !== null) {
+      window.clearTimeout(stepExitTimeoutRef.current)
+      stepExitTimeoutRef.current = null
+    }
+    if (stepEnterTimeoutRef.current !== null) {
+      window.clearTimeout(stepEnterTimeoutRef.current)
+      stepEnterTimeoutRef.current = null
+    }
+  }
 
   const applyFieldValidation = (field: FieldName, value: string) => {
     const error = validateField(field, value)
@@ -272,6 +309,24 @@ export function CourseSection() {
 
     if (from === 1) {
       setIsCourseSearchOpen(false)
+      clearStepTransitionTimers()
+      setStepTransition('step-1-leaving')
+
+      stepExitTimeoutRef.current = window.setTimeout(() => {
+        setStep(2)
+        setStepTransition('step-2-entering')
+
+        stepEnterTimeoutRef.current = window.setTimeout(() => {
+          setStepTransition('idle')
+          stepEnterTimeoutRef.current = null
+        }, STEP_ENTER_DURATION_MS)
+
+        stepExitTimeoutRef.current = null
+      }, STEP_EXIT_DURATION_MS)
+
+      setSubmitStatus('idle')
+      setSubmitMessage('')
+      return
     }
 
     setStep((Math.min(from + 1, 2) as FormStep))
@@ -280,6 +335,8 @@ export function CourseSection() {
   }
 
   const handleStepBack = () => {
+    clearStepTransitionTimers()
+    setStepTransition('idle')
     setStep((Math.max(step - 1, 1) as FormStep))
     setSubmitStatus('idle')
     setSubmitMessage('')
@@ -312,6 +369,9 @@ export function CourseSection() {
     event.preventDefault()
 
     if (step === 1) {
+      if (isStepTransitioning) {
+        return
+      }
       handleStepAdvance(1)
       return
     }
@@ -368,21 +428,21 @@ export function CourseSection() {
       <div className="lp-lead__inner">
         <div className="lp-lead__title-wrap">
           <h2 className="lp-lead__title">{formLeadTitle}</h2>
-          <img
-            className="lp-lead__title-icon"
-            src="/landing/lead-arrow-forward.svg"
-            alt=""
-            aria-hidden="true"
-          />
         </div>
 
         <form
-          className={`lp-lead__form ${step === 1 ? 'lp-lead__form--step-1' : 'lp-lead__form--step-2'}`}
+          className={`lp-lead__form ${step === 1 ? 'lp-lead__form--step-1' : 'lp-lead__form--step-2'} ${
+            isStepTransitioning ? 'lp-lead__form--transitioning' : ''
+          }`}
           onSubmit={handleSubmit}
           noValidate
         >
           {step === 1 ? (
-            <div className="lp-lead__row lp-lead__row--step-1">
+            <div
+              className={`lp-lead__row lp-lead__row--step-1 ${
+                stepTransition === 'step-1-leaving' ? 'lp-lead__row--anim-exit-left' : ''
+              }`}
+            >
               <div className="lp-lead__field-wrap lp-lead__field-wrap--modality">
                 <label
                   className={`lp-lead__field lp-lead__field--select ${
@@ -607,15 +667,30 @@ export function CourseSection() {
                 ) : null}
               </div>
 
-              <button type="submit" className="lp-lead__button">
+              <button type="submit" className="lp-lead__button" disabled={isStepTransitioning}>
                 CONTINUAR
               </button>
             </div>
           ) : null}
 
           {step === 2 ? (
-            <div className="lp-lead__row lp-lead__row--step-2">
-              <button type="button" className="lp-lead__back" onClick={handleStepBack}>
+            <div
+              className={`lp-lead__row lp-lead__row--step-2 ${
+                stepTransition === 'step-2-entering' ? 'lp-lead__row--anim-enter-right' : ''
+              }`}
+            >
+              <button
+                type="button"
+                className="lp-lead__back"
+                disabled={submitStatus === 'submitting'}
+                onClick={handleStepBack}
+              >
+                <img
+                  className="lp-lead__back-icon"
+                  src="/landing/lead-arrow-forward.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
                 Voltar
               </button>
 
@@ -623,7 +698,7 @@ export function CourseSection() {
                 <label className={`lp-lead__field lp-lead__field--plain ${fullNameInvalid ? 'is-invalid' : ''}`}>
                   <input
                     type="text"
-                    placeholder="Digite o nome"
+                    placeholder="Digite seu nome"
                     value={fullName}
                     autoComplete="name"
                     maxLength={120}
@@ -713,7 +788,7 @@ export function CourseSection() {
               <button
                 type="submit"
                 className="lp-lead__button"
-                disabled={submitStatus === 'submitting'}
+                disabled={submitStatus === 'submitting' || isStepTransitioning}
               >
                 {submitStatus === 'submitting' ? 'ENVIANDO...' : 'ENVIAR'}
               </button>
