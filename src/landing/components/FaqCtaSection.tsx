@@ -9,42 +9,42 @@ const faqItems: FaqItem[] = [
   {
     question: 'Como funciona o vestibular online?',
     answer:
-      'O processo é realizado em ambiente digital, com orientações em cada etapa e resultado divulgado após a avaliação.',
+      'O vestibular é realizado de forma digital, com foco em facilitar o seu acesso ao Ensino Superior. Além da prova online, você pode ingressar utilizando sua nota do ENEM, como Segunda Graduação (aproveitando disciplinas já cursadas) ou via transferência externa de outra Instituição.',
   },
   {
     question: 'Quais são as formas de pagamento?',
     answer:
-      'Você pode pagar com cartão, boleto e opções de parcelamento conforme campanha vigente no momento da matrícula.',
+      'Buscamos facilitar o seu acesso ao Ensino Superior com opções flexíveis. Você pode realizar o pagamento das mensalidades via PIX, garantindo a baixa imediata no sistema, ou através de cartão de crédito, com a possibilidade de parcelamento. Nosso objetivo é que a questão financeira não seja um obstáculo para a sua Formação Profissional.',
   },
   {
     question: 'Quem pode se inscrever no curso de Enfermagem?',
     answer:
-      'Pode se inscrever quem concluiu o ensino médio e deseja ingressar na graduação em Enfermagem.',
+      'Qualquer pessoa que tenha concluído o Ensino Médio. Este curso é ideal para quem possui vocação para o cuidado humano, responsabilidade ética e o desejo de liderar equipes de Saúde em ambientes de alta tecnologia.',
   },
   {
     question: 'Como funciona a transferência ou retorno?',
     answer:
-      'A transferência e o retorno dependem de análise documental e aproveitamento de disciplinas conforme regulamento acadêmico.',
+      'Para quem vem de outra Instituição, o processo de transferência é focado no aproveitamento de créditos: basta apresentar seu Histórico e as Ementas das Disciplinas cursadas para que nossa Coordenação analise as equivalências. Já para ex-alunos que desejam retomar o sonho da Graduação, o processo é simplificado através de um requerimento de retorno junto à nossa secretaria Acadêmica (sujeito à disponibilidade de vaga na turma correspondente).',
   },
   {
     question: 'O que faz um Enfermeiro e quais são suas áreas de atuação?',
     answer:
-      'O enfermeiro atua no cuidado, prevenção e gestão em hospitais, clínicas, atenção básica, urgência e outras áreas da saúde.',
+      'O Enfermeiro é o pilar central de qualquer sistema de Saúde. Suas funções vão muito além do curativo: ele prescreve cuidados, lidera equipes técnicas, opera tecnologias de suporte à vida e gerencia Unidades inteiras. Você poderá atuar em Hospitais de Alta Complexidade (UTI e Centro Cirúrgico), Saúde Pública (clínicas e postos), Resgate e Emergência (atendimento pré-hospitalar), além de áreas como Auditoria, Docência e Enfermagem Estética.',
   },
   {
     question: 'Quais são as principais disciplinas do curso de Enfermagem',
     answer:
-      'Entre as principais disciplinas estão fundamentos de Enfermagem, saúde coletiva, clínica médica, urgência e estágio supervisionado.',
+      'A matriz curricular é organizada em eixos que vão das Bases Biológicas (como Anatomia e Fisiologia) até a Fundamentação do Cuidar em áreas críticas. Você estudará disciplinas como Farmacologia, Semiologia, Assistência ao Paciente Crítico e Gestão de Serviços de Saúde. Para conferir a lista completa de disciplinas por semestre e a carga horária detalhada, clique aqui e baixe o PDF da Matriz Curricular.',
   },
   {
     question: 'Como o curso de Enfermagem prepara os alunos para o Mercado de trabalho?',
     answer:
-      'A formação combina teoria, prática em laboratório e vivências de estágio para desenvolver competências técnicas e comportamentais.',
+      'O Curso oferece uma Carga Horária de mais de 4.200 horas, equilibrando teoria e prática. Desde o início, você vivencia a rotina profissional em laboratórios modernos e simulações que replicam cenários hospitalares reais, finalizando sua formação com Estágios Curriculares Supervisionados obrigatórios nos últimos semestres para garantir total segurança técnica.',
   },
   {
     question: 'Quais são as oportunidades de carreira para Enfermeiros formados?',
     answer:
-      'Há oportunidades em instituições públicas e privadas, assistência hospitalar, atenção primária, auditoria, docência e gestão em saúde.',
+      'A Graduação em Enfermagem abre portas para um Mercado com alta empregabilidade. Você poderá atuar como Enfermeiro Assistencial em grandes redes hospitalares, assumir a Gestão de Unidades de Saúde, atuar no Resgate Especializado ou focar em áreas como Pediatria e Neonatologia, sempre com a possibilidade de ascensão para cargos de liderança e direção.',
   },
 ]
 

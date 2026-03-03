@@ -572,8 +572,10 @@
 }
 
 .lp-program__content {
-  width: 462px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 462px;
+  min-width: 0;
+  flex: 1 1 452px;
   color: #070707;
 }
 
@@ -741,11 +743,14 @@
 }
 
 .lp-program__media {
-  width: 736px;
-  height: 403px;
+  width: 100%;
+  max-width: 736px;
+  min-width: 0;
+  height: auto;
+  aspect-ratio: 736 / 403;
   border-radius: 20px;
   overflow: hidden;
-  flex-shrink: 0;
+  flex: 1 1 736px;
 }
 
 .lp-program__media img {
@@ -877,8 +882,8 @@
 }
 
 .lp-course-about__content {
-  width: 759px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 759px;
   color: #070707;
 }
 
@@ -1969,6 +1974,21 @@
 
 .lp-enroll-popup__status--error {
   color: #bc3f3f;
+}
+
+@media (max-width: 1240px) {
+  .lp-program__inner {
+    gap: 24px;
+  }
+
+  .lp-course-about {
+    gap: 28px;
+    grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+  }
+
+  .lp-course-about__highlight {
+    max-width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
