@@ -150,7 +150,7 @@
 }
 
 .lp-lead__form {
-  width: 644px;
+  width: auto;
   max-width: 100%;
   display: grid;
   gap: 8px;
