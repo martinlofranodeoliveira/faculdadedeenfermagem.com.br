@@ -827,9 +827,9 @@
 
 .lp-course-about {
   margin-top: 54px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 430px minmax(0, 1fr);
   align-items: flex-start;
-  flex-wrap: wrap;
   gap: 52px;
 }
 
@@ -924,7 +924,7 @@
 
 .lp-course-about__cta {
   margin: 18px auto 0;
-  flex-basis: 100%;
+  grid-column: 1 / -1;
   width: 175px;
   height: 50px;
   border: 0;
@@ -2088,6 +2088,7 @@
 
   .lp-course-about {
     margin-top: 34px;
+    display: flex;
     flex-direction: column;
     gap: 24px;
   }
