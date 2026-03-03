@@ -17,14 +17,15 @@ const courseTabs: CourseTab[] = [
 const aboutCourse = {
   title: 'SOBRE O CURSO DE ENFERMAGEM',
   description:
-    'A gradua\u00e7\u00e3o em Enfermagem capacita especialistas para trabalhar na preven\u00e7\u00e3o e no incentivo \u00e0 sa\u00fade em diferentes contextos. Com dura\u00e7\u00e3o de cinco anos, habilita para a atua\u00e7\u00e3o conjunta com demais profissionais do setor, aprimorando habilidades em assist\u00eancia, gest\u00e3o de f\u00e1rmacos, obten\u00e7\u00e3o de informa\u00e7\u00f5es cl\u00ednicas e defini\u00e7\u00e3o de condutas.',
+    'A gradua\u00e7\u00e3o em Enfermagem forma profissionais qualificados para atuar na promo\u00e7\u00e3o, preven\u00e7\u00e3o e recupera\u00e7\u00e3o da sa\u00fade em diferentes n\u00edveis de aten\u00e7\u00e3o \u00e0 sa\u00fade. Com dura\u00e7\u00e3o de 5 (cinco) anos, o curso desenvolve compet\u00eancias t\u00e9cnicas, cient\u00edficas e humanas, preparando o estudante para o trabalho interdisciplinar e para a tomada de decis\u00f5es cl\u00ednicas com responsabilidade e seguran\u00e7a.',
   highlight:
-    'Oferece forma\u00e7\u00e3o pr\u00e1tica e prepara o aluno para atender \u00e0s demandas sociais com excel\u00eancia.',
+    'A forma\u00e7\u00e3o integra teoria e pr\u00e1tica desde os primeiros per\u00edodos, fortalecendo habilidades em assist\u00eancia, gest\u00e3o do cuidado, administra\u00e7\u00e3o de medicamentos, interpreta\u00e7\u00e3o de dados cl\u00ednicos e defini\u00e7\u00e3o de condutas baseadas em evid\u00eancias.',
   bullets: [
-    'Aprenda com imers\u00e3o pr\u00e1tica intensiva desde o in\u00edcio',
-    'Atue na preven\u00e7\u00e3o e incentivo \u00e0 sa\u00fade',
-    'Pratique em Laborat\u00f3rios pr\u00f3prios com simuladores e tecnologia de ponta',
-    'Trabalhe em diferentes contextos e ambientes de sa\u00fade',
+    'Aprenda com imers\u00e3o pr\u00e1tica intensiva desde o primeiro per\u00edodo do curso',
+    'Laborat\u00f3rios pr\u00f3prios com simuladores e tecnologia de ponta',
+    'Atua\u00e7\u00e3o na promo\u00e7\u00e3o, preven\u00e7\u00e3o e cuidado integral \u00e0 sa\u00fade',
+    'Prepara\u00e7\u00e3o para atua\u00e7\u00e3o em m\u00faltiplos contextos assistenciais de sa\u00fade',
+    'Desenvolvimento de responsabilidade social e postura \u00e9tica',
   ],
 }
 
@@ -206,7 +207,11 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
 
       <div ref={shellRef} className={`lp-course-tabs__shell ${isPinned ? 'is-pinned' : ''}`}>
         <div className="lp-course-tabs__inner">
-          <nav ref={navRef} className="lp-course-tabs__nav" aria-label="Navegação de seções do curso">
+          <nav
+            ref={navRef}
+            className="lp-course-tabs__nav"
+            aria-label="Navega\u00e7\u00e3o de se\u00e7\u00f5es do curso"
+          >
             {courseTabs.map((tab, index) => (
               <button
                 key={tab.id}
@@ -244,7 +249,7 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
           <div className="lp-course-about__media">
             <img
               src="/landing/course-about-image.png"
-              alt="Alunos de enfermagem em treinamento prático"
+              alt="Alunos de enfermagem em treinamento pr\u00e1tico"
               width={430}
               height={435}
             />
@@ -263,14 +268,13 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
                 </li>
               ))}
             </ul>
-
-            <button type="button" className="lp-course-about__cta" onClick={onOpenPopup}>
-              Saiba mais
-            </button>
           </div>
+
+          <button type="button" className="lp-course-about__cta" onClick={onOpenPopup}>
+            Saiba mais
+          </button>
         </article>
       </div>
     </section>
   )
 }
-

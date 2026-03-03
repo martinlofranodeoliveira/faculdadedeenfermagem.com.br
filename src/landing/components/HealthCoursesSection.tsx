@@ -32,16 +32,21 @@ function normalizeUpperText(value: string): string {
 
 function formatCurrentPriceForCard(value: string): string {
   const normalized = normalizeUpperText(value)
-  if (!normalized) return '18X R$ 66,00/MÊS'
-  if (/\/M[EÊ]S/i.test(normalized)) return normalized
-  return `${normalized}/MÊS`
+  if (!normalized) return '18X R$ 66,00/M\u00caS'
+
+  const valueWithMonthAccent = normalized.replace(/\/MES/gi, '/M\u00caS')
+  if (/\/M[E\u00ca]S/i.test(valueWithMonthAccent)) {
+    return valueWithMonthAccent
+  }
+
+  return `${valueWithMonthAccent}/M\u00caS`
 }
 
 function formatOldPriceForCard(oldValue: string, currentValueWithSuffix: string): string {
   const normalizedOld = normalizeUpperText(oldValue)
   if (!normalizedOld) return ''
 
-  const normalizedCurrent = normalizeUpperText(currentValueWithSuffix.replace(/\/M[EÊ]S$/i, ''))
+  const normalizedCurrent = normalizeUpperText(currentValueWithSuffix.replace(/\/M[E\u00ca]S$/i, ''))
   if (normalizedOld === normalizedCurrent) return ''
 
   return normalizedOld
@@ -69,6 +74,9 @@ function mapPostCourseToHealthCard(course: PostCourse): HealthCourse {
 const fallbackHealthCourses: HealthCourse[] = getNursingPostCourseFallback().map(
   mapPostCourseToHealthCard,
 )
+
+const HEALTH_COURSES_NOTICE =
+  'Os cursos atendem \u00e0s normativas e exig\u00eancias estabelecidas pelo COREN, assegurando conformidade com a legisla\u00e7\u00e3o profissional vigente.'
 
 export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSectionProps) {
   const [healthCourses, setHealthCourses] = useState<HealthCourse[]>(fallbackHealthCourses)
@@ -118,9 +126,10 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
     <section id="cursos-saude" className="lp-health">
       <div className="lp-health__inner">
         <header className="lp-health__header">
-          <h2 className="lp-health__title">PÓS EAD NA ÁREA DA SAÚDE</h2>
+          <h2 className="lp-health__title">P\u00d3S EAD NA \u00c1REA DA SA\u00daDE</h2>
           <p className="lp-health__subtitle">
-          Enfermeiros pós-graduados recebem salários até 2x maiores
+            <span className="lp-health__subtitle-highlight">ENFERMEIROS P\u00d3S-GRADUADOS </span>
+            <strong>RECEBEM SAL\u00c1RIOS AT\u00c9 2X MAIORES</strong>
           </p>
         </header>
 
@@ -133,21 +142,14 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
                     {course.showCoren ? (
                       <span className="lp-health-tag lp-health-tag--coren">
                         <img src="/landing/course-tag-verified.svg" alt="" aria-hidden="true" />
-                        CHANCELADO COREN
+                        RECONHECIDO PELO MEC
                       </span>
                     ) : null}
 
-                    <div className="lp-health-card__tags-secondary">
-                      <span className="lp-health-tag lp-health-tag--video">
-                        <img src="/landing/course-tag-video.svg" alt="" aria-hidden="true" />
-                        COM VIDEOAULAS
-                      </span>
-
-                      <span className="lp-health-tag lp-health-tag--school">
-                        <img src="/landing/course-tag-school.svg" alt="" aria-hidden="true" />
-                        PÓS-GRADUAÇÃO EAD
-                      </span>
-                    </div>
+                    <span className="lp-health-tag lp-health-tag--video">
+                      <img src="/landing/course-tag-video.svg" alt="" aria-hidden="true" />
+                      COM VIDEOAULAS
+                    </span>
                   </div>
 
                   <h3 className="lp-health-card__name">{course.title}</h3>
@@ -169,6 +171,16 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
             ))}
           </div>
         </div>
+
+        <aside className="lp-health__notice" role="note" aria-label="Aviso sobre regulamenta\u00e7\u00e3o dos cursos">
+          <img
+            className="lp-health__notice-icon"
+            src="/landing/course-alert.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <p className="lp-health__notice-text">{HEALTH_COURSES_NOTICE}</p>
+        </aside>
       </div>
     </section>
   )

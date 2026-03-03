@@ -1,4 +1,4 @@
-﻿export function FooterBottomSection() {
+export function FooterBottomSection() {
   return (
     <footer id="rodape" className="lp-footer-bottom">
       <div className="lp-footer-bottom__inner">
@@ -13,7 +13,7 @@
             </div>
 
             <p className="lp-footer-brand__description">
-              ExcelÃªncia no ensino superior com foco na inovaÃ§Ã£o e na empregabilidade dos nossos
+              Excelência no ensino superior com foco na inovação e na empregabilidade dos nossos
               alunos.
             </p>
 
@@ -33,7 +33,7 @@
             <ul>
               <li>
                 <img src="/landing/footer-icon-location.svg" alt="" aria-hidden="true" />
-                <span>{'R. J\u00falio de Castilhos, 777 - Metr\u00f4 Bel\u00e9m, S\u00e3o Paulo - SP, 03059-005'}</span>
+                <span>R. Júlio de Castilhos, 777 - Metrô Belém, São Paulo - SP, 03059-005</span>
               </li>
               <li>
                 <img src="/landing/footer-icon-phone.svg" alt="" aria-hidden="true" />
@@ -49,7 +49,7 @@
           </section>
 
           <section className="lp-footer-map-block">
-            <h3>LocalizaÃ§Ã£o</h3>
+            <h3>Localização</h3>
 
             <div className="lp-footer-map-block__card">
               <img src="/landing/footer-map.png" alt="" aria-hidden="true" />
@@ -69,7 +69,7 @@
           <small>(c) 2025 Faculdade Paulista. Todos os direitos reservados.</small>
 
           <div className="lp-footer-bottom__links">
-            <a href="/politica-de-privacidade">PolÃ­tica de Privacidade</a>
+            <a href="/politica-de-privacidade">Política de Privacidade</a>
             <a href="/termos-de-uso">Termos de Uso</a>
           </div>
         </div>
@@ -77,4 +77,3 @@
     </footer>
   )
 }
-

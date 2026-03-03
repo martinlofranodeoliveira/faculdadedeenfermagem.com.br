@@ -829,6 +829,7 @@
   margin-top: 54px;
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
   gap: 52px;
 }
 
@@ -868,39 +869,40 @@
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 18px;
   font-weight: 400;
-  line-height: 28px;
+  line-height: 24px;
 }
 
 .lp-course-about__highlight {
   margin: 14px 0 0;
   border-radius: 20px;
-  padding: 15px 20px;
-  background: rgba(3, 178, 128, 0.15);
+  padding: 10px 15px;
+  max-width: 717px;
+  background: #d9f3ec;
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 23px;
   color: #003123;
 }
 
 .lp-course-about__bullets {
-  margin: 14px 0 0;
+  margin: 16px 0 0;
   padding: 0;
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 16px;
-  row-gap: 14px;
+  width: min(560px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .lp-course-about__bullets li {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 39px;
+  min-height: 30px;
   min-width: 0;
   font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 22px;
   color: #082628;
@@ -921,7 +923,8 @@
 }
 
 .lp-course-about__cta {
-  margin-top: 14px;
+  margin: 18px auto 0;
+  flex-basis: 100%;
   width: 175px;
   height: 50px;
   border: 0;
@@ -1267,13 +1270,23 @@
 
 .lp-health__subtitle {
   margin: 0;
-  width: 293px;
+  width: 417px;
   max-width: 100%;
-  font-family: 'Liberation Sans', Arial, sans-serif;
-  font-size: 18px;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 22px;
   font-weight: 400;
-  line-height: 26px;
+  line-height: 30px;
+  text-transform: uppercase;
   color: #ffffff;
+}
+
+.lp-health__subtitle-highlight {
+  color: #4cf8c7;
+}
+
+.lp-health__subtitle strong {
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-weight: 800;
 }
 
 .lp-health__list-wrap {
@@ -1308,7 +1321,7 @@
   min-height: 152px;
   border-radius: 16px;
   background: #ffffff;
-  padding: 23px 28px 23px 43px;
+  padding: 23px 51px 23px 43px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1316,7 +1329,7 @@
 }
 
 .lp-health-card__content {
-  width: 867px;
+  width: 607px;
   max-width: 100%;
   min-width: 0;
 }
@@ -1324,14 +1337,7 @@
 .lp-health-card__tags {
   display: flex;
   align-items: center;
-  gap: 25px;
-  flex-wrap: nowrap;
-}
-
-.lp-health-card__tags-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 25px;
+  gap: 12px;
   flex-wrap: nowrap;
 }
 
@@ -1369,13 +1375,8 @@
   height: 23.012px;
 }
 
-.lp-health-tag--school img {
-  width: 28.456px;
-  height: 28.456px;
-}
-
 .lp-health-card__name {
-  margin: 15px 0 0;
+  margin: 12px 0 0;
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 20.867px;
   font-weight: 700;
@@ -1420,6 +1421,34 @@
   text-transform: uppercase;
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.lp-health__notice {
+  margin-top: 16px;
+  width: 100%;
+  border-radius: 18px;
+  background: rgba(47, 244, 188, 0.14);
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.lp-health__notice-icon {
+  width: 34px;
+  height: 34px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.lp-health__notice-text {
+  margin: 0;
+  flex: 1;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 30px;
+  color: #2ff4bc;
 }
 
 .lp-faq-cta {
@@ -2089,8 +2118,8 @@
 
   .lp-course-about__bullets {
     margin-top: 16px;
-    grid-template-columns: 1fr;
-    row-gap: 10px;
+    gap: 10px;
+    width: 100%;
   }
 
   .lp-course-about__bullets li {
@@ -2173,6 +2202,8 @@
   .lp-health__subtitle {
     width: 100%;
     max-width: 420px;
+    font-size: 20px;
+    line-height: 28px;
   }
 
   .lp-health__list-wrap {
@@ -2198,11 +2229,6 @@
     flex-wrap: wrap;
   }
 
-  .lp-health-card__tags-secondary {
-    gap: 14px;
-    flex-wrap: nowrap;
-  }
-
   .lp-health-card__name {
     margin-top: 10px;
     font-size: 20px;
@@ -2216,6 +2242,23 @@
   .lp-health-card__cta {
     width: 192px;
     align-self: flex-end;
+  }
+
+  .lp-health__notice {
+    margin-top: 14px;
+    border-radius: 14px;
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .lp-health__notice-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .lp-health__notice-text {
+    font-size: 16px;
+    line-height: 22px;
   }
 
   .lp-faq-cta {
@@ -2608,7 +2651,8 @@
   .lp-course-about__bullets {
     order: 5;
     margin-top: 24px;
-    row-gap: 8px;
+    gap: 8px;
+    width: 100%;
   }
 
   .lp-course-about__bullets li {
@@ -2864,12 +2908,6 @@
     flex-wrap: nowrap;
   }
 
-  .lp-health-card__tags-secondary {
-    gap: 6px;
-    width: auto;
-    flex-wrap: nowrap;
-  }
-
   .lp-health-tag {
     font-size: 12px;
     line-height: 1.45;
@@ -2892,10 +2930,6 @@
   .lp-health-tag--video img {
     width: 18.352px;
     height: 18.352px;
-  }
-
-  .lp-health-tag--school {
-    display: none;
   }
 
   .lp-health-card__name {
@@ -2924,6 +2958,23 @@
     font-size: 12.76px;
     line-height: 19.14px;
     align-self: stretch;
+  }
+
+  .lp-health__notice {
+    margin-top: 14px;
+    border-radius: 12px;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .lp-health__notice-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .lp-health__notice-text {
+    font-size: 14px;
+    line-height: 18px;
   }
 
   .lp-faq-cta {
