@@ -17,9 +17,34 @@ const faqItems: FaqItem[] = [
       'Você pode pagar com cartão, boleto e opções de parcelamento conforme campanha vigente no momento da matrícula.',
   },
   {
-    question: 'O diploma EAD tem a mesma validade?',
+    question: 'Quem pode se inscrever no curso de Enfermagem?',
     answer:
-      'Sim. Cursos reconhecidos pelo MEC possuem a mesma validade legal para diploma, independente da modalidade.',
+      'Pode se inscrever quem concluiu o ensino médio e deseja ingressar na graduação em Enfermagem.',
+  },
+  {
+    question: 'Como funciona a transferência ou retorno?',
+    answer:
+      'A transferência e o retorno dependem de análise documental e aproveitamento de disciplinas conforme regulamento acadêmico.',
+  },
+  {
+    question: 'O que faz um Enfermeiro e quais são suas áreas de atuação?',
+    answer:
+      'O enfermeiro atua no cuidado, prevenção e gestão em hospitais, clínicas, atenção básica, urgência e outras áreas da saúde.',
+  },
+  {
+    question: 'Quais são as principais disciplinas do curso de Enfermagem',
+    answer:
+      'Entre as principais disciplinas estão fundamentos de Enfermagem, saúde coletiva, clínica médica, urgência e estágio supervisionado.',
+  },
+  {
+    question: 'Como o curso de Enfermagem prepara os alunos para o Mercado de trabalho?',
+    answer:
+      'A formação combina teoria, prática em laboratório e vivências de estágio para desenvolver competências técnicas e comportamentais.',
+  },
+  {
+    question: 'Quais são as oportunidades de carreira para Enfermeiros formados?',
+    answer:
+      'Há oportunidades em instituições públicas e privadas, assistência hospitalar, atenção primária, auditoria, docência e gestão em saúde.',
   },
 ]
 
