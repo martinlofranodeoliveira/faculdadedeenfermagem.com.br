@@ -7,11 +7,11 @@ set -euo pipefail
 #
 # Optional overrides:
 #   REPO_URL=https://github.com/martinlofranodeoliveira/faculdadedeenfermagem.com.br.git
-#   TARGET_DIR=/www/wwwroot/homolog.faculdadedeenfermagem.com.br
+#   TARGET_DIR=/www/wwwroot/faculdadedeenfermagem.com.br
 #   BRANCH=main
 
 REPO_URL="${REPO_URL:-https://github.com/martinlofranodeoliveira/faculdadedeenfermagem.com.br.git}"
-TARGET_DIR="${TARGET_DIR:-/www/wwwroot/homolog.faculdadedeenfermagem.com.br}"
+TARGET_DIR="${TARGET_DIR:-/www/wwwroot/faculdadedeenfermagem.com.br}"
 BRANCH="${BRANCH:-main}"
 
 echo "==> Repo:   $REPO_URL"
