@@ -1510,6 +1510,8 @@
 .lp-health__pager-arrow > span {
   font-size: 23px;
   line-height: 1;
+  top: -3px;
+  position: relative;
 }
 
 .lp-health__pager-arrow--next {
