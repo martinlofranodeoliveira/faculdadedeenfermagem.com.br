@@ -12,17 +12,13 @@
             />
             <p className="lp-program__location-text">
               <strong>Local:</strong>{' '}
-              <span>
-                {'R. J\u00falio de Castilhos, 777 - Metr\u00f4 Bel\u00e9m,'}
-                <br />
-                {'S\u00e3o Paulo - SP, 03059-005'}
-              </span>
+              <span>R. Júlio de Castilhos, 777 - Metrô Belém, São Paulo - SP, 03059-005</span>
             </p>
           </div>
 
-          <h1 className="lp-program__title">GRADUAÃ‡ÃƒO PRESENCIAL EM ENFERMAGEM</h1>
+          <h1 className="lp-program__title">GRADUAÇÃO PRESENCIAL EM ENFERMAGEM</h1>
           <p className="lp-program__subtitle">
-            Formando profissionais de excelÃªncia no cuidado com os pacientes.
+            Formando profissionais de excelência no cuidado com os pacientes.
           </p>
 
           <div className="lp-program__meta">
@@ -51,17 +47,17 @@
                 />
               </div>
               <div className="lp-program__meta-text">
-                <strong>InÃ­cio das aulas:</strong>
+                <strong>Início das aulas:</strong>
                 <span>01/07/2026</span>
               </div>
             </div>
           </div>
 
           <div className="lp-program__knowledge">
-            <strong>Ãrea de conhecimento:</strong>
+            <strong>Área de conhecimento:</strong>
             <div className="lp-program__tags">
-              <span className="lp-program__tag">SaÃºde</span>
-              <span className="lp-program__tag">AssistÃªncia</span>
+              <span className="lp-program__tag">Saúde</span>
+              <span className="lp-program__tag">Assistência</span>
               <span className="lp-program__tag">Pessoas</span>
             </div>
           </div>
@@ -79,4 +75,3 @@
     </section>
   )
 }
-
