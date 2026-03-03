@@ -2887,7 +2887,7 @@
 
   .lp-health {
     background: #061e20;
-    padding: 28px 0 0;
+    padding: 28px 0 15px;
   }
 
   .lp-health__inner {
