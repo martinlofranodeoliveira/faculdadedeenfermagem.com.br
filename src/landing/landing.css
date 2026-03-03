@@ -170,7 +170,7 @@
 }
 
 .lp-lead__row--step-2 {
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) auto;
 }
 
 .lp-lead__row--step-3 {
