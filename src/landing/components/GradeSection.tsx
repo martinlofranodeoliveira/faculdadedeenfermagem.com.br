@@ -138,7 +138,7 @@ type GradeSectionProps = {
 }
 
 export function GradeSection({ onOpenPopup }: GradeSectionProps) {
-  const [openTerm, setOpenTerm] = useState<string | null>(gradeItems[2]?.term ?? null)
+  const [openTerm, setOpenTerm] = useState<string | null>(null)
 
   return (
     <section id="grade-curricular" className="lp-grade">
