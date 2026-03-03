@@ -2195,6 +2195,9 @@
 }
 
 @media (max-width: 640px) {
+  .lp-course-tabs__shell.is-pinned {
+    padding: 10px 0 !important;
+  }
   .lp-header {
     backdrop-filter: blur(3.896px);
   }
