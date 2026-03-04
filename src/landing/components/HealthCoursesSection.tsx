@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 
 import type { CourseLeadSelection } from '../crmLead'
 import {
@@ -176,7 +176,7 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
         <header className="lp-health__header">
           <h2 className="lp-health__title">PÓS EAD NA ÁREA DA SAÚDE</h2>
           <p className="lp-health__subtitle">
-            <span className="lp-health__subtitle-highlight">ENFERMEIROS PÓS-GRADUADOS </span>
+            <span className="lp-health__subtitle-highlight">ENFERMEIROS ESPECIALIZADOS </span>
             <strong>RECEBEM SALÁRIOS ATÉ 2X MAIORES</strong>
           </p>
         </header>
