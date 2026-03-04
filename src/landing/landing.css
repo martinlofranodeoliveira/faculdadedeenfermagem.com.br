@@ -932,7 +932,7 @@
   margin: 16px 0 0;
   padding: 0;
   list-style: none;
-  width: min(560px, 100%);
+  width: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -2793,7 +2793,7 @@
     order: 4;
     margin-top: 24px;
     width: 100%;
-    height: 365px;
+    height: 388px;
     aspect-ratio: auto;
     border-radius: 16.782px;
   }
