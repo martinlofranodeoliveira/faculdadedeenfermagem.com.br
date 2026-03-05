@@ -1,25 +1,25 @@
-ï»¿const marketCards = [
+const marketCards = [
   {
-    image: '/landing/mercado-card-1.jpg',
-    alt: 'Atendimento em saÃºde pÃºblica com profissional de enfermagem e famÃ­lia',
-    salary: 'MÃ‰DIA SALARIAL: R$ 4.000,00 A R$ 7.500,00',
-    title: 'SaÃºde PÃºblica',
+    image: '/landing/saude_publica.webp',
+    alt: 'Atendimento em saúde pública com profissional de enfermagem e família',
+    salary: 'MÉDIA SALARIAL: R$ 4.000,00 A R$ 7.500,00',
+    title: 'Saúde Pública',
     description:
-      'Preste assistÃªncia integral em ClÃ­nicas, Unidades BÃ¡sicas de SaÃºde e programas de prevenÃ§Ã£o.',
+      'Preste assistência integral em Clínicas, Unidades Básicas de Saúde e programas de prevenção.',
   },
   {
-    image: '/landing/mercado-card-2.png',
+    image: '/landing/enfermeiro_de_resgate.webp',
     alt: 'Equipe de enfermagem atuando em resgate e primeiros socorros',
-    salary: 'MÃ‰DIA SALARIAL: R$ 4.750,00 A 6.500,00',
+    salary: 'MÉDIA SALARIAL: R$ 4.750,00 A 6.500,00',
     title: 'Enfermeiro de Resgate',
     description:
-      'Integre equipes de UrgÃªncia para salvar vidas em ocorrÃªncias crÃ­ticas e desastres.',
+      'Integre equipes de Urgência para salvar vidas em ocorrências críticas e desastres.',
   },
   {
-    image: '/landing/mercado-card-3.png',
-    alt: 'Enfermeiro pediÃ¡trico em atendimento infantil',
-    salary: 'MÃ‰DIA SALARIAL: R$ 3.800,00 A R$ 7.000,00',
-    title: 'Enfermeiro PediÃ¡trico',
+    image: '/landing/enfermeiro_pediatrico.webp',
+    alt: 'Enfermeiro pediátrico em atendimento infantil',
+    salary: 'MÉDIA SALARIAL: R$ 3.800,00 A R$ 7.000,00',
+    title: 'Enfermeiro Pediátrico',
     description: 'Monitore o desenvolvimento infantil e realize cuidados especializados.',
   },
 ]
@@ -52,3 +52,4 @@ export function MarketSection() {
     </section>
   )
 }
+

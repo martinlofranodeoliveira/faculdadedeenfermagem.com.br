@@ -248,7 +248,9 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
         <article id="sobre-curso" className="lp-course-about">
           <div className="lp-course-about__media">
             <img
-              src="/landing/course-about-image.png"
+              src="/landing/sobre-o-curso-de-enfermagem.webp"
+              srcSet="/landing/sobre-o-curso-de-enfermagem-mobile.webp 640w, /landing/sobre-o-curso-de-enfermagem.webp 1200w"
+              sizes="(max-width: 640px) 100vw, 430px"
               alt="Alunos de enfermagem em treinamento pr\u00e1tico"
               width={430}
               height={435}

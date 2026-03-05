@@ -64,7 +64,7 @@ export function FaqSection({ onOpenPopup }: FaqSectionProps) {
 
         <div className="lp-program__media">
           <img
-            src="/landing/graduacao-section-image.png"
+            src="/landing/graduacao-presencial-em-enfermagem.webp"
             alt="Equipe de enfermagem atendendo paciente em ambiente hospitalar"
             width={736}
             height={403}
@@ -74,7 +74,7 @@ export function FaqSection({ onOpenPopup }: FaqSectionProps) {
 
       <div className="lp-program__mobile-tabs-image">
         <img
-          src="/landing/graduacao-section-image-mobile.png"
+          src="/landing/graduacao-presencial-em-enfermagem-mobile.webp"
           alt="Aluna de enfermagem no laboratório da graduação"
           width={390}
           height={247}
