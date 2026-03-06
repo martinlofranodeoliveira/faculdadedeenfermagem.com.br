@@ -173,13 +173,18 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
   return (
     <section id="cursos-saude" className="lp-health">
       <div className="lp-health__inner">
-        <header className="lp-health__header">
-          <h2 className="lp-health__title">PÓS EAD NA ÁREA DA SAÚDE</h2>
-          <p className="lp-health__subtitle">
-            <span className="lp-health__subtitle-highlight">ENFERMEIROS ESPECIALIZADOS </span>
-            <strong>RECEBEM SALÁRIOS ATÉ 2X MAIORES</strong>
-          </p>
-        </header>
+        <div className="lp-health__banner">
+          <picture className="lp-health__banner-picture">
+            <source media="(max-width: 640px)" srcSet="/landing/pos-graduacao-ead-banner-mobile.webp" />
+            <img
+              className="lp-health__banner-image"
+              src="/landing/pos-graduacao-ead-banner.webp"
+              alt="PÓS EAD NA ÁREA DA SAÚDE ENFERMEIROS ESPECIALIZADOS RECEBEM SALÁRIOS ATÉ 2X MAIORES"
+              width={1236}
+              height={316}
+            />
+          </picture>
+        </div>
 
         <div className="lp-health__list-wrap">
           <div className="lp-health__list">

@@ -1279,7 +1279,7 @@
 
 .lp-health {
   background: #061e20;
-  padding: 68px 0 32px;
+  padding: 32px 0 32px;
 }
 
 .lp-health__inner {
@@ -1287,47 +1287,23 @@
   margin: 0 auto;
 }
 
-.lp-health__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+.lp-health__banner {
+  margin: 0 0 32px;
 }
 
-.lp-health__title {
-  margin: 0;
-  font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 30px;
-  font-weight: 800;
-  line-height: 40px;
-  letter-spacing: -0.9px;
-  color: #ffffff;
-  text-transform: uppercase;
+.lp-health__banner-picture {
+  display: block;
 }
 
-.lp-health__subtitle {
-  margin: 0;
-  width: 417px;
-  max-width: 100%;
-  font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 30px;
-  text-transform: uppercase;
-  color: #ffffff;
-}
-
-.lp-health__subtitle-highlight {
-  color: #4cf8c7;
-}
-
-.lp-health__subtitle strong {
-  font-family: 'Kumbh Sans', var(--font-sans);
-  font-weight: 800;
+.lp-health__banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
 }
 
 .lp-health__list-wrap {
-  margin-top: 25px;
+  margin-top: 0;
   max-height: none;
   overflow: visible;
   padding-right: 0;
@@ -2329,21 +2305,12 @@
     padding: 52px 0 28px;
   }
 
-  .lp-health__header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .lp-health__subtitle {
-    width: 100%;
-    max-width: 420px;
-    font-size: 20px;
-    line-height: 28px;
+  .lp-health__banner {
+    margin: 0 0 26px;
   }
 
   .lp-health__list-wrap {
-    margin-top: 20px;
+    margin-top: 0;
     padding-right: 0;
     max-height: none;
     overflow: visible;
@@ -3007,24 +2974,16 @@
     width: min(362px, calc(100% - 28px));
   }
 
-  .lp-health__title {
-    font-size: 25px;
-    line-height: 37px;
-    letter-spacing: -0.75px;
-    color: #ffffff;
-    max-width: 362px;
+  .lp-health__banner {
+    margin: 0 0 20px;
   }
 
-  .lp-health__subtitle {
-    font-size: 16px;
-    line-height: 20px;
-    color: #ffffff;
-    width: 362px;
-    max-width: 100%;
+  .lp-health__banner-image {
+    border-radius: 12px;
   }
 
   .lp-health__list-wrap {
-    margin-top: 16px;
+    margin-top: 0;
     max-height: none;
     overflow: visible;
     padding-right: 0;
