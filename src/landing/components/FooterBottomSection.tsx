@@ -86,7 +86,7 @@ export function FooterBottomSection() {
         </section>
 
         <div className="lp-footer-bottom__bar">
-          <small>(c) 2025 Faculdade Paulista. Todos os direitos reservados.</small>
+          <small>(c) 2026 Faculdade de Enfermagem. Todos os direitos reservados.</small>
 
           <div className="lp-footer-bottom__links">
             <a href="/politica-de-privacidade">Política de Privacidade</a>
