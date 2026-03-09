@@ -15,6 +15,7 @@ type HealthCourse = {
   currentPrice: string
   oldPrice: string
   showCoren: boolean
+  durationLabel: string
   selection: CourseLeadSelection
 }
 
@@ -66,6 +67,7 @@ function mapPostCourseToHealthCard(course: PostCourse): HealthCourse {
     currentPrice,
     oldPrice,
     showCoren: true,
+    durationLabel: '360 A 720 HORAS',
     selection: {
       courseType: 'pos',
       courseValue: course.value,
@@ -80,7 +82,7 @@ const fallbackHealthCourses: HealthCourse[] = getNursingPostCourseFallback().map
 )
 
 const HEALTH_COURSES_NOTICE =
-  'Os cursos atendem às normativas e exigências estabelecidas pelo COREN, assegurando conformidade com a legislação profissional vigente.'
+  'Apenas cursos com carga horária a partir de 420h possuem atividades práticas. Atendendo às normativas e exigências estabelecidas pelo Conselho Regional de Enfermagem (COREN), assegurando conformidade com a legislação profissional vigente.'
 
 function getVisiblePageNumbers(currentPage: number, totalPages: number): number[] {
   if (totalPages <= 3) {
@@ -186,12 +188,26 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
           </picture>
         </div>
 
+        <aside className="lp-health__notice" role="note" aria-label="Aviso sobre regulamentação dos cursos">
+          <img
+            className="lp-health__notice-icon"
+            src="/landing/course-alert.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <p className="lp-health__notice-text">{HEALTH_COURSES_NOTICE}</p>
+        </aside>
+
         <div className="lp-health__list-wrap">
           <div className="lp-health__list">
             {visibleCourses.map((course) => (
               <article key={course.id} className="lp-health-card">
                 <div className="lp-health-card__content">
                   <div className="lp-health-card__tags">
+                    <span className="lp-health-tag lp-health-tag--hours">
+                      {course.durationLabel}
+                    </span>
+
                     {course.showCoren ? (
                       <span className="lp-health-tag lp-health-tag--coren">
                         <img src="/landing/course-tag-verified.svg" alt="" aria-hidden="true" />
@@ -269,16 +285,6 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
             </p>
           </nav>
         ) : null}
-
-        <aside className="lp-health__notice" role="note" aria-label="Aviso sobre regulamentação dos cursos">
-          <img
-            className="lp-health__notice-icon"
-            src="/landing/course-alert.svg"
-            alt=""
-            aria-hidden="true"
-          />
-          <p className="lp-health__notice-text">{HEALTH_COURSES_NOTICE}</p>
-        </aside>
       </div>
     </section>
   )

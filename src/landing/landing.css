@@ -1335,6 +1335,35 @@
   border-radius: 20px;
 }
 
+.lp-health__notice {
+  margin-top: 0;
+  margin-bottom: 18px;
+  width: 100%;
+  border-radius: 18px;
+  background: rgba(47, 244, 188, 0.14);
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.lp-health__notice-icon {
+  width: 34px;
+  height: 34px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.lp-health__notice-text {
+  margin: 0;
+  flex: 1;
+  font-family: 'Kumbh Sans', var(--font-sans);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  color: #2ff4bc;
+}
+
 .lp-health__list-wrap {
   margin-top: 0;
   max-height: none;
@@ -1385,8 +1414,8 @@
 .lp-health-card__tags {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: nowrap;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .lp-health-tag {
@@ -1406,7 +1435,18 @@
   flex-shrink: 0;
 }
 
+.lp-health-tag--hours {
+  min-height: 32px;
+  border-radius: 40px;
+  background: #006e4f;
+  padding: 4px 15px;
+  font-size: 15.176px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
 .lp-health-tag--coren {
+  min-height: 32px;
   border-radius: 29px;
   border: 2px solid #00a476;
   background: transparent;
@@ -1436,8 +1476,8 @@
 .lp-health-card__price {
   margin: 6px 0 0;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: baseline;
+  gap: 8px;
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 20.867px;
   line-height: 1.14;
@@ -1544,34 +1584,6 @@
   font-weight: 500;
   line-height: 1.2;
   color: #ffffff;
-}
-
-.lp-health__notice {
-  margin-top: 16px;
-  width: 100%;
-  border-radius: 18px;
-  background: rgba(47, 244, 188, 0.14);
-  padding: 15px 25px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.lp-health__notice-icon {
-  width: 34px;
-  height: 34px;
-  display: block;
-  flex-shrink: 0;
-}
-
-.lp-health__notice-text {
-  margin: 0;
-  flex: 1;
-  font-family: 'Kumbh Sans', var(--font-sans);
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 30px;
-  color: #2ff4bc;
 }
 
 .lp-faq-cta {
@@ -3175,6 +3187,23 @@
     border-radius: 12px;
   }
 
+  .lp-health__notice {
+    margin-bottom: 14px;
+    border-radius: 12px;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .lp-health__notice-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .lp-health__notice-text {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
   .lp-health__list-wrap {
     margin-top: 0;
     max-height: none;
@@ -3211,10 +3240,10 @@
   }
 
   .lp-health-card__tags {
-    gap: 2px;
-    flex-direction: column;
+    gap: 6px;
+    flex-direction: row;
     align-items: flex-start;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 
   .lp-health-tag {
@@ -3224,7 +3253,15 @@
     color: #000000;
   }
 
+  .lp-health-tag--hours {
+    min-height: 23px;
+    padding: 3px 10px;
+    border-radius: 23.127px;
+    font-size: 11px;
+  }
+
   .lp-health-tag--coren {
+    min-height: 23px;
     padding: 3.19px 7.975px;
     border: 1.2px solid #00a476;
     background: transparent;
@@ -3335,23 +3372,6 @@
     font-size: 12.76px;
     line-height: 19.14px;
     align-self: stretch;
-  }
-
-  .lp-health__notice {
-    margin-top: 14px;
-    border-radius: 12px;
-    padding: 10px 12px;
-    gap: 8px;
-  }
-
-  .lp-health__notice-icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .lp-health__notice-text {
-    font-size: 14px;
-    line-height: 18px;
   }
 
   .lp-faq-cta {
