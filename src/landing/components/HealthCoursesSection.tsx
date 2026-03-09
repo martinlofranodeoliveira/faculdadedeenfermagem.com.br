@@ -232,7 +232,7 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
                   <h3 className="lp-health-card__name">{course.title}</h3>
 
                   <p className="lp-health-card__price">
-                    <strong>{course.currentPrice}</strong>
+                    <strong>A PARTIR DE: {course.currentPrice}</strong>
                     {course.oldPrice ? <span>{course.oldPrice}</span> : null}
                   </p>
                 </div>
