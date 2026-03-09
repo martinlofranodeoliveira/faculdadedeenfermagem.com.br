@@ -1,3 +1,4 @@
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 
 import {
@@ -17,6 +18,7 @@ type EnrollmentPopupProps = {
 }
 
 type FieldErrors = {
+  workload?: string
   fullName?: string
   email?: string
   phone?: string
@@ -25,6 +27,7 @@ type FieldErrors = {
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupProps) {
+  const [selectedWorkload, setSelectedWorkload] = useState('')
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -33,8 +36,22 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
   const [submitMessage, setSubmitMessage] = useState('')
 
   const firstErrorMessage = useMemo(() => {
-    return errors.fullName ?? errors.email ?? errors.phone ?? ''
+    return errors.workload ?? errors.fullName ?? errors.email ?? errors.phone ?? ''
   }, [errors])
+
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    setSelectedWorkload('')
+    setFullName('')
+    setEmail('')
+    setPhone('')
+    setErrors({})
+    setSubmitStatus('idle')
+    setSubmitMessage('')
+  }, [isOpen, selection?.courseValue])
 
   useEffect(() => {
     if (!isOpen) {
@@ -66,18 +83,32 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
   const topImageSrc = isPostGraduation
     ? '/landing/posgraduacao-em-enfermagem-topo-popup-formulario.webp'
     : '/landing/graduacao-em-enfermagem-topo-popup-formulario.webp'
+  const workloadOptions =
+    selection.workloadOptions && selection.workloadOptions.length > 0
+      ? selection.workloadOptions
+      : selection.workloadSummary
+        ? [selection.workloadSummary]
+        : []
+  const resolvedWorkloadText = isPostGraduation
+    ? selectedWorkload ||
+      (workloadOptions.length === 0 ? selection.workloadSummary || selection.workloadLabel || '' : '')
+    : selection.workloadLabel || selection.workloadSummary || ''
+  const popupPriceText = selection.coursePrice ?? ''
+  const popupNoteLines = selection.noteLines ?? []
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const nextErrors: FieldErrors = {
+      workload:
+        isPostGraduation && !selectedWorkload ? 'Selecione uma carga horária para continuar.' : undefined,
       fullName: validateFullName(fullName),
       email: validateEmail(email),
       phone: validatePhone(phone),
     }
     setErrors(nextErrors)
 
-    if (nextErrors.fullName || nextErrors.email || nextErrors.phone) {
+    if (nextErrors.workload || nextErrors.fullName || nextErrors.email || nextErrors.phone) {
       setSubmitStatus('error')
       setSubmitMessage('')
       return
@@ -91,7 +122,11 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
         fullName,
         email,
         phone,
-        selection,
+        selection: {
+          ...selection,
+          workloadLabel: selectedWorkload || selection.workloadLabel,
+          workloadSummary: selectedWorkload || selection.workloadSummary,
+        },
       })
 
       window.location.assign('/obrigado')
@@ -131,14 +166,52 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
         />
 
         <div className="lp-enroll-popup__content">
-          <h2 id="lp-enroll-popup-title" className="lp-enroll-popup__title">
+          <h2
+            id="lp-enroll-popup-title"
+            className={isPostGraduation ? 'lp-sr-only' : 'lp-enroll-popup__title'}
+          >
             Curso: {selection.courseLabel}
           </h2>
+
           <p className="lp-enroll-popup__subtitle">
             Preencha o formulário para receber mais informações
           </p>
 
           <form className="lp-enroll-popup__form" onSubmit={handleSubmit} noValidate>
+            {isPostGraduation && workloadOptions.length > 0 ? (
+              <div className={`lp-enroll-popup__meta ${errors.workload ? 'is-invalid' : ''}`}>
+                <Select
+                  value={selectedWorkload}
+                  onValueChange={(value) => {
+                    setSelectedWorkload(value)
+                    setErrors((currentErrors) => ({
+                      ...currentErrors,
+                      workload: undefined,
+                    }))
+                  }}
+                >
+                  <SelectTrigger
+                    className="lp-enroll-popup__meta-select-trigger"
+                    aria-label="Selecione a carga horária do curso"
+                    aria-invalid={errors.workload ? 'true' : 'false'}
+                  >
+                    <SelectValue placeholder="Selecione a carga horária" />
+                  </SelectTrigger>
+                  <SelectContent
+                    className="lp-enroll-popup__select-content"
+                    position="popper"
+                    sideOffset={6}
+                  >
+                    {workloadOptions.map((option) => (
+                      <SelectItem key={option} value={option} className="lp-enroll-popup__select-item">
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            ) : null}
+
             <input
               type="text"
               name="name"
@@ -171,9 +244,32 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
             />
 
             <button type="submit" disabled={submitStatus === 'submitting'}>
-              {submitStatus === 'submitting' ? 'ENVIANDO...' : 'ENVIAR'}
+              {submitStatus === 'submitting' ? 'ENVIANDO...' : 'CONTINUAR'}
             </button>
           </form>
+
+          {isPostGraduation ? (
+            <div className="lp-enroll-popup__summary">
+              <h3 className="lp-enroll-popup__summary-title">Curso: {selection.courseLabel}</h3>
+              {resolvedWorkloadText ? (
+                <p className="lp-enroll-popup__summary-workload">{resolvedWorkloadText}</p>
+              ) : null}
+              {popupPriceText ? (
+                <p className="lp-enroll-popup__summary-price">{popupPriceText}</p>
+              ) : null}
+            </div>
+          ) : null}
+
+          {isPostGraduation && selection.noteTitle && popupNoteLines.length > 0 ? (
+            <div className="lp-enroll-popup__note" role="note">
+              <p className="lp-enroll-popup__note-title">{selection.noteTitle}</p>
+              <ul className="lp-enroll-popup__note-list">
+                {popupNoteLines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
 
           {submitStatus === 'error' && firstErrorMessage ? (
             <p className="lp-enroll-popup__status lp-enroll-popup__status--error">

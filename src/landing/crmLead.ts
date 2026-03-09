@@ -34,6 +34,12 @@ export type CourseLeadSelection = {
   courseValue: string
   courseLabel: string
   courseId?: number
+  workloadLabel?: string
+  workloadSummary?: string
+  workloadOptions?: string[]
+  coursePrice?: string
+  noteTitle?: string
+  noteLines?: string[]
 }
 
 export type SendLeadToCrmInput = {
@@ -153,6 +159,16 @@ export async function sendLeadToCrm({
   const gradCourseId = getGraduationCourseId(selection.courseValue)
   const postCourseId = selection.courseId ?? 0
   const courseLabel = selection.courseLabel.trim()
+  const workloadText = selection.workloadSummary?.trim() || selection.workloadLabel?.trim() || ''
+  const observationParts = [
+    isPostGraduation
+      ? 'POS-GRADUACAO: Lead Landing Page Faculdade de Enfermagem'
+      : 'GRADUACAO: Lead Landing Page Faculdade de Enfermagem',
+  ]
+
+  if (workloadText) {
+    observationParts.push(`Carga horaria: ${workloadText}`)
+  }
 
   const payload = {
     aluno: 0,
@@ -168,9 +184,7 @@ export async function sendLeadToCrm({
     valor: '',
     funil: isPostGraduation ? funilPos : funilGrad,
     status: statusLead,
-    observacao: isPostGraduation
-      ? 'PÓS-GRADUAÇÃO: Lead Landing Page Faculdade de Enfermagem'
-      : 'GRADUAÇÃO: Lead Landing Page Faculdade de Enfermagem',
+    observacao: observationParts.join(' | '),
     campanha: pickTrackingValue(trackingParams, ['campanha', 'utm_campaign']),
     midia: pickTrackingValue(trackingParams, ['midia', 'utm_medium']),
     fonte: isPostGraduation
@@ -222,3 +236,4 @@ export async function sendLeadToCrm({
     throw new Error(`CRM request failed with status ${response.status}`)
   }
 }
+

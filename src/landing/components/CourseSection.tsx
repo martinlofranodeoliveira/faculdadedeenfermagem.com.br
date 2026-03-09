@@ -19,6 +19,7 @@ import {
   validatePhone,
   type CourseType,
 } from '../crmLead'
+import { getPostCourseMetadata } from '../postCourseMetadata'
 import {
   POS_COURSES_ENDPOINT,
   filterNursingPostCourses,
@@ -42,7 +43,7 @@ type CourseOption = {
   courseId?: number
 }
 
-type FieldName = 'courseType' | 'course' | 'fullName' | 'email' | 'phone'
+type FieldName = 'courseType' | 'course' | 'workload' | 'fullName' | 'email' | 'phone'
 type FieldErrors = Partial<Record<FieldName, string>>
 type Touched = Record<FieldName, boolean>
 
@@ -59,13 +60,14 @@ const DEFAULT_GRADUATION_OPTION: CourseOption = {
 const GRADUATION_COURSE_OPTIONS: CourseOption[] = [DEFAULT_GRADUATION_OPTION]
 
 const STEP_FIELDS: Record<FormStep, FieldName[]> = {
-  1: ['courseType', 'course'],
+  1: ['courseType', 'course', 'workload'],
   2: ['fullName', 'email', 'phone'],
 }
 
 const EMPTY_TOUCHED: Touched = {
   courseType: false,
   course: false,
+  workload: false,
   fullName: false,
   email: false,
   phone: false,
@@ -93,8 +95,24 @@ function validateCourse(value: string): string | undefined {
   return undefined
 }
 
-function validateField(field: FieldName, value: string): string | undefined {
+function validateWorkload(
+  value: string,
+  courseType: CourseType | '',
+  courseValue: string,
+): string | undefined {
+  if (courseType !== 'pos' || !courseValue) return undefined
+  if (!value) return 'Selecione a carga horária para continuar'
+  return undefined
+}
+
+function validateField(
+  field: FieldName,
+  value: string,
+  courseType: CourseType | '',
+  courseValue: string,
+): string | undefined {
   if (field === 'courseType') return validateCourseType(value)
+  if (field === 'workload') return validateWorkload(value, courseType, courseValue)
   if (field === 'fullName') return validateFullName(value)
   if (field === 'email') return validateEmail(value)
   if (field === 'phone') return validatePhone(value)
@@ -111,6 +129,7 @@ export function CourseSection() {
   const [courseType, setCourseType] = useState<CourseType | ''>('graduacao')
   const [course, setCourse] = useState(DEFAULT_GRADUATION_OPTION.value)
   const [courseSearch, setCourseSearch] = useState(DEFAULT_GRADUATION_OPTION.label)
+  const [selectedWorkload, setSelectedWorkload] = useState('')
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -241,19 +260,54 @@ export function CourseSection() {
     return lookup
   }, [courseOptionsLookup])
 
+  const selectedCourseLabel = useMemo(() => {
+    return (courseLookup.get(course) ?? courseSearch.trim()) || ''
+  }, [courseLookup, course, courseSearch])
+
+  const selectedPostCourseMetadata = useMemo(() => {
+    if (courseType !== 'pos' || !selectedCourseLabel) {
+      return null
+    }
+
+    return getPostCourseMetadata(selectedCourseLabel)
+  }, [courseType, selectedCourseLabel])
+
+  const workloadOptions = selectedPostCourseMetadata?.workloadOptions ?? []
+
+  useEffect(() => {
+    if (courseType !== 'pos') {
+      if (selectedWorkload) {
+        setSelectedWorkload('')
+      }
+      return
+    }
+
+    if (!selectedWorkload) {
+      return
+    }
+
+    if (!workloadOptions.includes(selectedWorkload)) {
+      setSelectedWorkload('')
+    }
+  }, [courseType, selectedWorkload, workloadOptions])
+
   const isPostCoursesLoading = courseType === 'pos' && postCourseStatus === 'loading'
   const isCourseSearchDisabled = !courseType || isPostCoursesLoading
   const isGraduationCourseLocked = courseType === 'graduacao'
+  const isWorkloadDisabled = courseType !== 'pos' || !course
+  const showWorkloadField = courseType === 'pos'
 
   const courseTypeInvalid = Boolean(touched.courseType && fieldErrors.courseType)
   const courseInvalid = Boolean(touched.course && fieldErrors.course)
+  const workloadInvalid = Boolean(touched.workload && fieldErrors.workload)
   const fullNameInvalid = Boolean(touched.fullName && fieldErrors.fullName)
   const emailInvalid = Boolean(touched.email && fieldErrors.email)
   const phoneInvalid = Boolean(touched.phone && fieldErrors.phone)
 
   const showStepOneInlineError =
-    step === 1 && submitStatus === 'error' && (courseTypeInvalid || courseInvalid)
-  const stepOneInlineErrorMessage = fieldErrors.courseType ?? fieldErrors.course ?? ''
+    step === 1 && submitStatus === 'error' && (courseTypeInvalid || courseInvalid || workloadInvalid)
+  const stepOneInlineErrorMessage =
+    fieldErrors.courseType ?? fieldErrors.course ?? fieldErrors.workload ?? ''
   const formLeadTitle = step === 1 ? 'Encontre seu Curso' : 'Informe os dados'
   const isStepTransitioning = stepTransition !== 'idle'
 
@@ -269,7 +323,7 @@ export function CourseSection() {
   }
 
   const applyFieldValidation = (field: FieldName, value: string) => {
-    const error = validateField(field, value)
+    const error = validateField(field, value, courseType, course)
     setFieldErrors((previous) => ({ ...previous, [field]: error }))
   }
 
@@ -280,6 +334,7 @@ export function CourseSection() {
   const getFieldValue = (field: FieldName): string => {
     if (field === 'courseType') return courseType
     if (field === 'course') return course
+    if (field === 'workload') return selectedWorkload
     if (field === 'fullName') return fullName
     if (field === 'email') return email
     return phone
@@ -289,7 +344,7 @@ export function CourseSection() {
     const nextErrors: FieldErrors = {}
 
     fields.forEach((field) => {
-      nextErrors[field] = validateField(field, getFieldValue(field))
+      nextErrors[field] = validateField(field, getFieldValue(field), courseType, course)
     })
 
     setFieldErrors((previous) => ({ ...previous, ...nextErrors }))
@@ -365,8 +420,9 @@ export function CourseSection() {
 
   const validateAllFields = (): FieldErrors => {
     return {
-      courseType: validateCourseType(courseType),
-      course: validateCourse(course),
+      courseType: validateField('courseType', courseType, courseType, course),
+      course: validateField('course', course, courseType, course),
+      workload: validateField('workload', selectedWorkload, courseType, course),
       fullName: validateFullName(fullName),
       email: validateEmail(email),
       phone: validatePhone(phone),
@@ -402,6 +458,7 @@ export function CourseSection() {
     setTouched({
       courseType: true,
       course: true,
+      workload: true,
       fullName: true,
       email: true,
       phone: true,
@@ -422,6 +479,8 @@ export function CourseSection() {
       const courseLabel = (courseLookup.get(course) ?? courseSearch.trim()) || course
       const resolvedCourseType = (courseType ||
         inferCourseTypeFromValue(course)) as CourseType
+      const selectedMetadata =
+        resolvedCourseType === 'pos' ? getPostCourseMetadata(courseLabel) : null
 
       await sendLeadToCrm({
         fullName,
@@ -432,6 +491,14 @@ export function CourseSection() {
           courseValue: course,
           courseLabel,
           courseId: selectedCourseOption?.courseId,
+          workloadLabel:
+            resolvedCourseType === 'pos'
+              ? selectedWorkload || selectedMetadata?.durationLabel
+              : undefined,
+          workloadSummary:
+            resolvedCourseType === 'pos'
+              ? selectedWorkload || selectedMetadata?.workloadSummary
+              : undefined,
         },
       })
 
@@ -453,6 +520,8 @@ export function CourseSection() {
 
         <form
           className={`lp-lead__form ${step === 1 ? 'lp-lead__form--step-1' : 'lp-lead__form--step-2'} ${
+            step === 1 && showWorkloadField ? 'lp-lead__form--step-1-pos' : ''
+          } ${
             isStepTransitioning ? 'lp-lead__form--transitioning' : ''
           }`}
           onSubmit={handleSubmit}
@@ -461,6 +530,8 @@ export function CourseSection() {
           {step === 1 ? (
             <div
               className={`lp-lead__row lp-lead__row--step-1 ${
+                showWorkloadField ? 'lp-lead__row--step-1-pos' : ''
+              } ${
                 stepTransition === 'step-1-leaving'
                   ? 'lp-lead__row--anim-exit-left'
                   : stepTransition === 'step-1-entering'
@@ -493,6 +564,7 @@ export function CourseSection() {
                         setCourseType(nextType)
                         setCourse(nextCourseValue)
                         setCourseSearch(nextCourseLabel)
+                        setSelectedWorkload('')
                         setIsCourseSearchOpen(false)
 
                         if (touched.courseType) {
@@ -501,6 +573,13 @@ export function CourseSection() {
 
                         if (touched.course) {
                           applyFieldValidation('course', nextCourseValue)
+                        }
+
+                        if (touched.workload) {
+                          setFieldErrors((previous) => ({
+                            ...previous,
+                            workload: validateField('workload', '', nextType, nextCourseValue),
+                          }))
                         }
                       }}
                     >
@@ -603,9 +682,13 @@ export function CourseSection() {
                       if (!normalizedValue) {
                         if (course) {
                           setCourse('')
+                          setSelectedWorkload('')
                         }
                         if (touched.course) {
                           applyFieldValidation('course', '')
+                        }
+                        if (touched.workload) {
+                          applyFieldValidation('workload', '')
                         }
                         return
                       }
@@ -616,8 +699,12 @@ export function CourseSection() {
                         normalizeComparableText(selectedCourseLabel) !== normalizedValue
                       ) {
                         setCourse('')
+                        setSelectedWorkload('')
                         if (touched.course) {
                           applyFieldValidation('course', '')
+                        }
+                        if (touched.workload) {
+                          applyFieldValidation('workload', '')
                         }
                       }
                     }}
@@ -665,9 +752,13 @@ export function CourseSection() {
                           onClick={() => {
                             setCourse(item.value)
                             setCourseSearch(item.label)
+                            setSelectedWorkload('')
                             setIsCourseSearchOpen(false)
                             markTouched('course')
                             applyFieldValidation('course', item.value)
+                            if (touched.workload) {
+                              applyFieldValidation('workload', '')
+                            }
                           }}
                         >
                           {item.label}
@@ -691,6 +782,58 @@ export function CourseSection() {
                   </span>
                 ) : null}
               </div>
+
+              {showWorkloadField ? (
+                <div className="lp-lead__field-wrap lp-lead__field-wrap--workload">
+                  <label
+                    className={`lp-lead__field lp-lead__field--workload ${
+                      workloadInvalid ? 'is-invalid' : ''
+                    } ${isWorkloadDisabled ? 'is-disabled' : ''}`}
+                  >
+                    <div className="lp-lead__select-wrapper">
+                      <Select
+                        value={selectedWorkload}
+                        onValueChange={(value) => {
+                          setSelectedWorkload(value)
+                          if (touched.workload) {
+                            applyFieldValidation('workload', value)
+                          }
+                        }}
+                        disabled={isWorkloadDisabled}
+                      >
+                        <SelectTrigger
+                          className="lp-lead__select-trigger"
+                          aria-label="Selecione a carga horária"
+                          aria-invalid={workloadInvalid}
+                          aria-describedby={workloadInvalid ? 'lead-workload-error' : undefined}
+                          onBlur={() => {
+                            markTouched('workload')
+                            applyFieldValidation('workload', selectedWorkload)
+                          }}
+                        >
+                          <SelectValue placeholder="Selecione a carga horária" />
+                        </SelectTrigger>
+                        <SelectContent
+                          className="lp-lead__select-content lp-lead__select-content--workload"
+                          position="popper"
+                          sideOffset={6}
+                        >
+                          {workloadOptions.map((item) => (
+                            <SelectItem key={item} value={item}>
+                              {item}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </label>
+                  {workloadInvalid ? (
+                    <span className="lp-lead__error" id="lead-workload-error">
+                      {fieldErrors.workload}
+                    </span>
+                  ) : null}
+                </div>
+              ) : null}
 
               <button type="submit" className="lp-lead__button" disabled={isStepTransitioning}>
                 CONTINUAR

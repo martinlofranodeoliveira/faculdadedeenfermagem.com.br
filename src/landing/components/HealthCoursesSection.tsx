@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from 'react'
 
 import type { CourseLeadSelection } from '../crmLead'
+import { getPostCourseMetadata } from '../postCourseMetadata'
 import {
   POS_COURSES_ENDPOINT,
   filterNursingPostCourses,
@@ -58,6 +59,7 @@ function formatOldPriceForCard(oldValue: string, currentValueWithSuffix: string)
 }
 
 function mapPostCourseToHealthCard(course: PostCourse): HealthCourse {
+  const metadata = getPostCourseMetadata(course.label)
   const currentPrice = formatCurrentPriceForCard(course.currentInstallmentPrice)
   const oldPrice = formatOldPriceForCard(course.oldInstallmentPrice, currentPrice)
 
@@ -67,12 +69,18 @@ function mapPostCourseToHealthCard(course: PostCourse): HealthCourse {
     currentPrice,
     oldPrice,
     showCoren: true,
-    durationLabel: '360 A 720 HORAS',
+    durationLabel: metadata.durationLabel,
     selection: {
       courseType: 'pos',
       courseValue: course.value,
       courseLabel: course.label,
       courseId: course.courseId,
+      workloadLabel: metadata.durationLabel,
+      workloadSummary: metadata.workloadSummary,
+      workloadOptions: metadata.workloadOptions,
+      coursePrice: currentPrice,
+      noteTitle: metadata.noteTitle,
+      noteLines: metadata.noteLines,
     },
   }
 }
@@ -82,7 +90,7 @@ const fallbackHealthCourses: HealthCourse[] = getNursingPostCourseFallback().map
 )
 
 const HEALTH_COURSES_NOTICE =
-  'Apenas cursos com carga horária a partir de 420h possuem atividades práticas. Atendendo às normativas e exigências estabelecidas pelo Conselho Regional de Enfermagem (COREN), assegurando conformidade com a legislação profissional vigente.'
+  'Apenas os cursos (a partir de 420h) atendem às normativas e exigências estabelecidas pelo COREN, assegurando conformidade com a legislação profissional vigente.'
 
 function getVisiblePageNumbers(currentPage: number, totalPages: number): number[] {
   if (totalPages <= 3) {
