@@ -37,6 +37,17 @@
   gap: 1rem;
 }
 
+.lp-header__brand-group {
+  width: 475px;
+  max-width: 100%;
+  height: 51px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
 .lp-logo {
   display: flex;
   align-items: center;
@@ -49,6 +60,28 @@
   width: auto;
   max-width: none;
   display: block;
+}
+
+.lp-header__brand-divider {
+  width: 1px;
+  height: 52px;
+  border-radius: 2px;
+  background: #d5d5d5;
+  flex-shrink: 0;
+}
+
+.lp-header__partner-logo {
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.lp-header__partner-logo--unicesp {
+  height: 51px;
+}
+
+.lp-header__partner-logo--fasul {
+  height: 33px;
 }
 
 .lp-header__cta {
@@ -2062,6 +2095,27 @@
     height: 73px;
   }
 
+  .lp-header__brand-group {
+    width: auto;
+    gap: 14px;
+  }
+
+  .lp-logo__image {
+    height: 44px;
+  }
+
+  .lp-header__brand-divider {
+    height: 44px;
+  }
+
+  .lp-header__partner-logo--unicesp {
+    height: 44px;
+  }
+
+  .lp-header__partner-logo--fasul {
+    height: 28px;
+  }
+
   .lp-lead__inner {
     flex-direction: column;
     align-items: stretch;
@@ -2429,14 +2483,27 @@
   .lp-course-tabs__shell.is-pinned {
     padding: 10px 0 !important;
   }
+
   .lp-header {
+    padding: 15px 15px 10px;
     backdrop-filter: blur(3.896px);
   }
 
   .lp-header__inner {
-    width: min(364px, calc(100% - 28px));
-    height: 48px;
+    width: min(360px, 100%);
+    height: auto;
+    margin: 0 auto;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-direction: column;
     gap: 10px;
+  }
+
+  .lp-header__brand-group {
+    width: 100%;
+    height: 30px;
+    justify-content: space-between;
+    gap: 8px;
   }
 
   .lp-logo {
@@ -2450,12 +2517,29 @@
     height: 30px;
   }
 
+  .lp-header__brand-divider {
+    display: block;
+    height: 30px;
+  }
+
+  .lp-header__partner-logo {
+    display: block;
+  }
+
+  .lp-header__partner-logo--unicesp {
+    height: 40px;
+  }
+
+  .lp-header__partner-logo--fasul {
+    height: 22px;
+  }
+
   .lp-header__cta {
-    width: auto;
-    height: 32px;
-    min-height: 32px;
-    padding: 6.493px 12.985px;
-    border-radius: 6px;
+    width: 100%;
+    height: 40px;
+    min-height: 40px;
+    padding: 12px 18px;
+    border-radius: 51px;
     font-size: 12px;
     font-weight: 800;
     line-height: 15.582px;
