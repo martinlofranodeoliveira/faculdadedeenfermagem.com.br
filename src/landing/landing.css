@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700;800&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700;800&display=swap');
 
 :root {
   --lp-brand: #0c6b58;
@@ -2273,8 +2273,9 @@
   margin: 0;
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .lp-enroll-popup__summary-workload {
