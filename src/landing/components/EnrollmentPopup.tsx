@@ -61,6 +61,12 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
     return null
   }
 
+  const isPostGraduation =
+    selection.courseType === 'pos' || selection.courseValue.toLowerCase().startsWith('pos-')
+  const topImageSrc = isPostGraduation
+    ? '/landing/posgraduacao-em-enfermagem-topo-popup-formulario.webp'
+    : '/landing/graduacao-em-enfermagem-topo-popup-formulario.webp'
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -117,7 +123,7 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
 
         <img
           className="lp-enroll-popup__top-image"
-          src="/landing/graduacao-em-enfermagem-topo-popup-formulario.webp"
+          src={topImageSrc}
           alt=""
           aria-hidden="true"
           width={513}

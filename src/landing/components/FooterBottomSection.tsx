@@ -4,18 +4,15 @@ export function FooterBottomSection() {
       <div className="lp-footer-bottom__inner">
         <div className="lp-footer-bottom__top">
           <section className="lp-footer-brand">
-            <div className="lp-footer-brand__logo-wrap">
-              <img
-                className="lp-footer-brand__logo"
-                src="/landing/faculdade-de-enfermagem-logo.webp"
-                alt="Faculdade de Enfermagem"
-              />
-            </div>
+            <img
+              className="lp-footer-brand__logo"
+              src="/landing/faculdade-de-enfermagem-logo-rodape.webp"
+              alt="Faculdade de Enfermagem"
+            />
 
             <p className="lp-footer-brand__description">
-              {
-                'Excel\u00eancia no ensino superior com foco na inova\u00e7\u00e3o e na empregabilidade dos nossos alunos.'
-              }
+              Excelência no ensino superior com foco na inovação e na empregabilidade dos
+              nossos alunos.
             </p>
 
             <div className="lp-footer-brand__social">
@@ -35,9 +32,8 @@ export function FooterBottomSection() {
               <li>
                 <img src="/landing/footer-icon-location.svg" alt="" aria-hidden="true" />
                 <span>
-                  {
-                    'Rua Dr. Diogo de Faria, 66 - Vila Mariana, S\u00e3o Paulo - SP, CEP: 04037-000'
-                  }
+                  Local: Rua Dr. Diogo de Faria, 66 - Vila Mariana, São Paulo - SP, CEP:
+                  04037-000
                 </span>
               </li>
               <li>
@@ -54,7 +50,7 @@ export function FooterBottomSection() {
           </section>
 
           <section className="lp-footer-map-block">
-            <h3>{'Localiza\u00e7\u00e3o'}</h3>
+            <h3>Localização</h3>
 
             <div className="lp-footer-map-block__card">
               <img src="/landing/footer-map.png" alt="" aria-hidden="true" />
@@ -70,11 +66,30 @@ export function FooterBottomSection() {
           </section>
         </div>
 
+        <section className="lp-footer-group" aria-label="Grupo FASUL Educacional">
+          <h3 className="lp-footer-group__title">Grupo FASUL Educacional</h3>
+
+          <div className="lp-footer-group__logos">
+            <div className="lp-footer-group__logo-card lp-footer-group__logo-card--fasul">
+              <img src="/landing/logo-rodape-fasul.webp" alt="FASUL Educacional" />
+            </div>
+            <div className="lp-footer-group__logo-card lp-footer-group__logo-card--unicesp">
+              <img src="/landing/logo-rodape-unicesp.webp" alt="UNICESP" />
+            </div>
+            <div className="lp-footer-group__logo-card lp-footer-group__logo-card--paulista">
+              <img src="/landing/logo-rodape-faculdade-paulista.webp" alt="Faculdade Paulista" />
+            </div>
+            <div className="lp-footer-group__logo-card lp-footer-group__logo-card--psicologia">
+              <img src="/landing/logo-rodape-psicologia.webp" alt="Faculdade de Psicologia" />
+            </div>
+          </div>
+        </section>
+
         <div className="lp-footer-bottom__bar">
           <small>(c) 2025 Faculdade Paulista. Todos os direitos reservados.</small>
 
           <div className="lp-footer-bottom__links">
-            <a href="/politica-de-privacidade">{'Pol\u00edtica de Privacidade'}</a>
+            <a href="/politica-de-privacidade">Política de Privacidade</a>
             <a href="/termos-de-uso">Termos de Uso</a>
           </div>
         </div>

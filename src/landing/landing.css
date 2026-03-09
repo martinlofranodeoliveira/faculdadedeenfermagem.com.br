@@ -1719,7 +1719,7 @@
 .lp-footer-bottom {
   background: #0d0a08;
   border-top: 1px solid #2a2420;
-  padding: 66px 0 30px;
+  padding: 46px 0 45px;
 }
 
 .lp-footer-bottom__inner {
@@ -1737,21 +1737,11 @@
 .lp-footer-brand {
   display: flex;
   flex-direction: column;
-  gap: 23px;
-}
-
-.lp-footer-brand__logo-wrap {
-  width: 184px;
-  height: 59px;
-  border-radius: 7px;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 23.3px;
 }
 
 .lp-footer-brand__logo {
-  width: 166px;
+  width: 169px;
   height: auto;
   display: block;
 }
@@ -1770,6 +1760,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  padding-top: 0.7px;
 }
 
 .lp-footer-brand__social a {
@@ -1797,6 +1788,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  min-width: 0;
 }
 
 .lp-footer-contact-block h3,
@@ -1822,6 +1814,7 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  min-width: 0;
   font-family: 'Liberation Sans', Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -1850,6 +1843,15 @@
   width: 16.667px;
   height: 13.333px;
   margin-top: 3px;
+}
+
+.lp-footer-contact-block li span,
+.lp-footer-contact-block li a {
+  min-width: 0;
+}
+
+.lp-footer-contact-block li span {
+  max-width: 266px;
 }
 
 .lp-footer-contact-block li a {
@@ -1900,8 +1902,65 @@
   display: block;
 }
 
+.lp-footer-group {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lp-footer-group__title {
+  margin: 0;
+  font-family: 'Liberation Sans', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #7e7f82;
+}
+
+.lp-footer-group__logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.lp-footer-group__logo-card {
+  min-height: 44px;
+  border-radius: 7px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 15px;
+  box-sizing: border-box;
+}
+
+.lp-footer-group__logo-card img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
+.lp-footer-group__logo-card--fasul img {
+  height: 22px;
+}
+
+.lp-footer-group__logo-card--unicesp img {
+  height: 14px;
+}
+
+.lp-footer-group__logo-card--paulista img {
+  height: 21px;
+}
+
+.lp-footer-group__logo-card--psicologia img {
+  height: 21px;
+}
+
 .lp-footer-bottom__bar {
-  margin-top: 45px;
+  margin-top: 20px;
   border-top: 1px solid #2a2420;
   padding-top: 33px;
   display: flex;
@@ -2466,8 +2525,12 @@
     gap: 28px;
   }
 
-  .lp-footer-map-block {
+  .lp-footer-brand {
     grid-column: 1 / -1;
+  }
+
+  .lp-footer-group__logos {
+    gap: 10px;
   }
 
   .lp-footer-bottom__bar {
@@ -2764,6 +2827,52 @@
     white-space: normal;
     text-align: center;
     flex: 0 0 auto;
+  }
+
+  .lp-footer-bottom {
+    padding: 42px 0 24px;
+  }
+
+  .lp-footer-bottom__top {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .lp-footer-brand {
+    gap: 20px;
+  }
+
+  .lp-footer-brand__description {
+    max-width: none;
+  }
+
+  .lp-footer-contact-block li span {
+    max-width: none;
+  }
+
+  .lp-footer-map-block__card {
+    height: 152px;
+  }
+
+  .lp-footer-group {
+    margin-top: 24px;
+  }
+
+  .lp-footer-group__logos {
+    gap: 10px;
+  }
+
+  .lp-footer-group__logo-card {
+    min-width: calc(50% - 5px);
+  }
+
+  .lp-footer-bottom__bar {
+    margin-top: 24px;
+  }
+
+  .lp-footer-bottom__links {
+    flex-wrap: wrap;
+    gap: 12px 24px;
   }
 
   .lp-course-tabs__tab:nth-child(1) {
