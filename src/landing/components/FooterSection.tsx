@@ -47,6 +47,18 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
 
   const activeIndex = courseTabs.findIndex((tab) => tab.id === activeTabId)
 
+  const scrollTabWithinNav = useCallback((button: HTMLButtonElement | null) => {
+    const navElement = navRef.current
+    if (!navElement || !button) return
+
+    const targetLeft = button.offsetLeft - (navElement.clientWidth - button.offsetWidth) / 2
+
+    navElement.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: 'smooth',
+    })
+  }, [])
+
   const measureShell = useCallback(() => {
     const shellElement = shellRef.current
     if (!shellElement) return
@@ -88,13 +100,13 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
 
       setActiveTabId(nextTab.id)
       nextButton?.focus()
-      nextButton?.scrollIntoView({ inline: 'center', block: 'nearest' })
+      scrollTabWithinNav(nextButton)
 
       if (shouldScroll) {
         scrollToTarget(nextTab.targetId)
       }
     },
-    [scrollToTarget],
+    [scrollTabWithinNav, scrollToTarget],
   )
 
   const updateIndicator = useCallback(() => {
@@ -194,8 +206,8 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
   useEffect(() => {
     updateIndicator()
     const activeButton = tabRefs.current[activeIndex]
-    activeButton?.scrollIntoView({ inline: 'center', block: 'nearest' })
-  }, [activeIndex, updateIndicator])
+    scrollTabWithinNav(activeButton)
+  }, [activeIndex, scrollTabWithinNav, updateIndicator])
 
   return (
     <section id="contato" ref={sectionRef} className="lp-course-tabs">

@@ -1,5 +1,5 @@
 import './landing.css'
-import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import type { CourseLeadSelection } from './crmLead'
 import { CourseSection } from './components/CourseSection'
@@ -27,7 +27,11 @@ export function LandingPage() {
   const [shouldRenderDeferredSections, setShouldRenderDeferredSections] = useState(false)
   const deferredSectionsAnchorRef = useRef<HTMLDivElement | null>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const resetScrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+
     const nextUrl = `${window.location.pathname}${window.location.search}`
     if (window.location.hash) {
       window.history.replaceState(null, '', nextUrl)
@@ -37,7 +41,18 @@ export function LandingPage() {
       window.history.scrollRestoration = 'manual'
     }
 
-    window.scrollTo(0, 0)
+    resetScrollToTop()
+
+    const frameId = window.requestAnimationFrame(() => {
+      resetScrollToTop()
+    })
+
+    window.addEventListener('pageshow', resetScrollToTop)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('pageshow', resetScrollToTop)
+    }
   }, [])
 
   useEffect(() => {
