@@ -1,12 +1,10 @@
-﻿import { useEffect, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 
 import type { CourseLeadSelection } from '../crmLead'
 import { getPostCourseMetadata } from '../postCourseMetadata'
 import {
-  POS_COURSES_ENDPOINT,
-  filterNursingPostCourses,
   getNursingPostCourseFallback,
-  parsePostGraduationCourses,
+  loadNursingPostCourses,
   type PostCourse,
 } from '../postCourses'
 
@@ -105,29 +103,49 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
   const [healthCourses, setHealthCourses] = useState<HealthCourse[]>(fallbackHealthCourses)
   const [isMobileLayout, setIsMobileLayout] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
+  const [shouldLoadDynamicCourses, setShouldLoadDynamicCourses] = useState(false)
+  const sectionRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    const abortController = new AbortController()
+    if (shouldLoadDynamicCourses) {
+      return
+    }
+
+    const sectionElement = sectionRef.current
+    if (!sectionElement || typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setShouldLoadDynamicCourses(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoadDynamicCourses(true)
+          observer.disconnect()
+        }
+      },
+      {
+        rootMargin: '320px 0px',
+      },
+    )
+
+    observer.observe(sectionElement)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [shouldLoadDynamicCourses])
+
+  useEffect(() => {
+    if (!shouldLoadDynamicCourses) {
+      return
+    }
+
     let isMounted = true
 
     const loadCourses = async () => {
       try {
-        const response = await fetch(POS_COURSES_ENDPOINT, {
-          method: 'GET',
-          signal: abortController.signal,
-          headers: {
-            Accept: 'text/plain, */*',
-          },
-        })
-
-        if (!response.ok) {
-          return
-        }
-
-        const rawText = await response.text()
-        const parsedHealthCourses = filterNursingPostCourses(
-          parsePostGraduationCourses(rawText),
-        ).map(mapPostCourseToHealthCard)
+        const parsedHealthCourses = (await loadNursingPostCourses()).map(mapPostCourseToHealthCard)
 
         if (!isMounted || parsedHealthCourses.length === 0) {
           return
@@ -143,9 +161,8 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
 
     return () => {
       isMounted = false
-      abortController.abort()
     }
-  }, [])
+  }, [shouldLoadDynamicCourses])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -181,7 +198,7 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
   const visiblePageNumbers = getVisiblePageNumbers(currentPage, totalPages)
 
   return (
-    <section id="cursos-saude" className="lp-health">
+    <section id="cursos-saude" ref={sectionRef} className="lp-health">
       <div className="lp-health__inner">
         <div className="lp-health__banner">
           <picture className="lp-health__banner-picture">
@@ -192,6 +209,9 @@ export function HealthCoursesSection({ onOpenCoursePopup }: HealthCoursesSection
               alt="PÓS EAD NA ÁREA DA SAÚDE ENFERMEIROS ESPECIALIZADOS RECEBEM SALÁRIOS ATÉ 2X MAIORES"
               width={1236}
               height={316}
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
             />
           </picture>
         </div>

@@ -12,6 +12,8 @@ export type PostCourse = {
   currentInstallmentPrice: string
 }
 
+let nursingPostCoursesPromise: Promise<PostCourse[]> | null = null
+
 const NURSING_POST_COURSE_LABELS = [
   'AUDITORIA EM SERVIÇOS DE ENFERMAGEM',
   'ENFERMAGEM DO TRABALHO',
@@ -221,8 +223,10 @@ export function filterNursingPostCourses(courses: PostCourse[]): PostCourse[] {
       return true
     })
     .sort((a, b) => {
-      const indexA = NURSING_POST_COURSE_ORDER.get(normalizePostLabelForMatch(a.label)) ?? Number.MAX_SAFE_INTEGER
-      const indexB = NURSING_POST_COURSE_ORDER.get(normalizePostLabelForMatch(b.label)) ?? Number.MAX_SAFE_INTEGER
+      const indexA =
+        NURSING_POST_COURSE_ORDER.get(normalizePostLabelForMatch(a.label)) ?? Number.MAX_SAFE_INTEGER
+      const indexB =
+        NURSING_POST_COURSE_ORDER.get(normalizePostLabelForMatch(b.label)) ?? Number.MAX_SAFE_INTEGER
 
       if (indexA !== indexB) {
         return indexA - indexB
@@ -240,4 +244,35 @@ export function getNursingPostCourseFallback(): PostCourse[] {
     oldInstallmentPrice: fallbackOldInstallmentPrice(),
     currentInstallmentPrice: fallbackCurrentInstallmentPrice(),
   }))
+}
+
+export async function loadNursingPostCourses(): Promise<PostCourse[]> {
+  if (!nursingPostCoursesPromise) {
+    nursingPostCoursesPromise = fetch(POS_COURSES_ENDPOINT, {
+      method: 'GET',
+      headers: {
+        Accept: 'text/plain, */*',
+      },
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Post courses request failed with status ${response.status}`)
+        }
+
+        const rawText = await response.text()
+        const courses = filterNursingPostCourses(parsePostGraduationCourses(rawText))
+
+        if (!courses.length) {
+          throw new Error('No post-graduation courses were parsed from the API response')
+        }
+
+        return courses
+      })
+      .catch((error) => {
+        nursingPostCoursesPromise = null
+        throw error
+      })
+  }
+
+  return nursingPostCoursesPromise
 }

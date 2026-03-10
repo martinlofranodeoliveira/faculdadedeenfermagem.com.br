@@ -1,19 +1,20 @@
 import './landing.css'
-import { useCallback, useEffect, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
 
 import type { CourseLeadSelection } from './crmLead'
 import { CourseSection } from './components/CourseSection'
-import { EnrollmentPopup } from './components/EnrollmentPopup'
-import { FaqCtaSection } from './components/FaqCtaSection'
 import { FaqSection } from './components/FaqSection'
-import { FooterBottomSection } from './components/FooterBottomSection'
-import { FooterSection } from './components/FooterSection'
-import { GradeSection } from './components/GradeSection'
 import { Header } from './components/Header'
-import { HealthCoursesSection } from './components/HealthCoursesSection'
 import { HeroSection } from './components/HeroSection'
-import { MarketSection } from './components/MarketSection'
-import { ProfileBannerSection } from './components/ProfileBannerSection'
+
+const EnrollmentPopup = lazy(() =>
+  import('./components/EnrollmentPopup').then((module) => ({ default: module.EnrollmentPopup })),
+)
+const DeferredLandingSections = lazy(() =>
+  import('./components/DeferredLandingSections').then((module) => ({
+    default: module.DeferredLandingSections,
+  })),
+)
 
 const HERO_COURSE_SELECTION: CourseLeadSelection = {
   courseType: 'graduacao',
@@ -23,6 +24,8 @@ const HERO_COURSE_SELECTION: CourseLeadSelection = {
 
 export function LandingPage() {
   const [popupSelection, setPopupSelection] = useState<CourseLeadSelection | null>(null)
+  const [shouldRenderDeferredSections, setShouldRenderDeferredSections] = useState(false)
+  const deferredSectionsAnchorRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const nextUrl = `${window.location.pathname}${window.location.search}`
@@ -36,6 +39,36 @@ export function LandingPage() {
 
     window.scrollTo(0, 0)
   }, [])
+
+  useEffect(() => {
+    if (shouldRenderDeferredSections) {
+      return
+    }
+
+    const anchorElement = deferredSectionsAnchorRef.current
+    if (!anchorElement || typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      setShouldRenderDeferredSections(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldRenderDeferredSections(true)
+          observer.disconnect()
+        }
+      },
+      {
+        rootMargin: '720px 0px',
+      },
+    )
+
+    observer.observe(anchorElement)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [shouldRenderDeferredSections])
 
   const openHeroPopup = useCallback(() => {
     setPopupSelection(HERO_COURSE_SELECTION)
@@ -55,19 +88,25 @@ export function LandingPage() {
       <HeroSection onOpenPopup={openHeroPopup} />
       <CourseSection />
       <FaqSection onOpenPopup={openHeroPopup} />
-      <FooterSection onOpenPopup={openHeroPopup} />
-      <ProfileBannerSection />
-      <MarketSection />
-      <GradeSection onOpenPopup={openHeroPopup} />
-      <HealthCoursesSection onOpenCoursePopup={openCoursePopup} />
-      <FaqCtaSection />
-      <FooterBottomSection />
-      <EnrollmentPopup
-        key={popupSelection ? `${popupSelection.courseValue}-${popupSelection.courseId ?? 0}` : 'closed'}
-        isOpen={popupSelection !== null}
-        selection={popupSelection}
-        onClose={closePopup}
-      />
+      <div ref={deferredSectionsAnchorRef} aria-hidden="true" />
+      {shouldRenderDeferredSections ? (
+        <Suspense fallback={null}>
+          <DeferredLandingSections
+            onOpenPopup={openHeroPopup}
+            onOpenCoursePopup={openCoursePopup}
+          />
+        </Suspense>
+      ) : null}
+      {popupSelection ? (
+        <Suspense fallback={null}>
+          <EnrollmentPopup
+            key={`${popupSelection.courseValue}-${popupSelection.courseId ?? 0}`}
+            isOpen
+            selection={popupSelection}
+            onClose={closePopup}
+          />
+        </Suspense>
+      ) : null}
     </main>
   )
 }

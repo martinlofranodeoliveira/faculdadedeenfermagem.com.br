@@ -151,7 +151,6 @@ export function GradeSection({ onOpenPopup }: GradeSectionProps) {
               <button
                 type="button"
                 className={`lp-grade__item ${openTerm === item.term ? 'is-open' : ''}`}
-                aria-label={`${item.term} - ${item.semesterName} - ${item.totalHours}`}
                 aria-expanded={openTerm === item.term}
                 aria-controls={`grade-panel-${item.term.replace(/\s+/g, '-')}`}
                 onClick={() => setOpenTerm((current) => (current === item.term ? null : item.term))}

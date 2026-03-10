@@ -1,6 +1,15 @@
 export function ProfileBannerSection() {
   return (
     <section id="perfil-banner" className="lp-profile-banner">
+      <img
+        className="lp-profile-banner__background"
+        src="/landing/perfil-banner-fundo.png"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
+      />
       <div className="lp-profile-banner__inner">
         <picture className="lp-profile-banner__picture">
           <source
@@ -13,6 +22,9 @@ export function ProfileBannerSection() {
             alt="Perfil do profissional de enfermagem"
             width={1240}
             height={178}
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
           />
         </picture>
       </div>

@@ -53,7 +53,14 @@ export function FooterBottomSection() {
             <h3>Localização</h3>
 
             <div className="lp-footer-map-block__card">
-              <img src="/landing/footer-map.webp" alt="" aria-hidden="true" />
+              <img
+                src="/landing/footer-map.webp"
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+              />
               <a
                 href="https://maps.google.com/?q=Rua+Dr.+Diogo+de+Faria,+66+-+Vila+Mariana,+S%C3%A3o+Paulo+-+SP,+CEP:+04037-000"
                 target="_blank"

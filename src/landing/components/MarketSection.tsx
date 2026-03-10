@@ -33,7 +33,16 @@ export function MarketSection() {
         <div className="lp-market__grid">
           {marketCards.map((card) => (
             <article key={card.image} className="lp-market__card">
-              <img className="lp-market__cover" src={card.image} alt={card.alt} width={392} height={240} />
+              <img
+                className="lp-market__cover"
+                src={card.image}
+                alt={card.alt}
+                width={392}
+                height={240}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+              />
               <div className="lp-market__salary">
                 <img
                   className="lp-market__salary-icon"

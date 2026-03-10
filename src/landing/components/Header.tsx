@@ -28,7 +28,6 @@ export function Header({ onOpenPopup }: HeaderProps) {
           type="button"
           className="lp-header__cta"
           onClick={onOpenPopup}
-          aria-label="Abrir formulario de inscricao da Graduacao em Enfermagem Presencial"
         >
           QUERO ME MATRICULAR
         </button>

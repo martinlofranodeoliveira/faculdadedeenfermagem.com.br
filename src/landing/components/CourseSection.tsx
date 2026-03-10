@@ -21,10 +21,8 @@ import {
 } from '../crmLead'
 import { getPostCourseMetadata } from '../postCourseMetadata'
 import {
-  POS_COURSES_ENDPOINT,
-  filterNursingPostCourses,
   getNursingPostCourseFallback,
-  parsePostGraduationCourses,
+  loadNursingPostCourses,
 } from '../postCourses'
 
 type FormStep = 1 | 2
@@ -157,25 +155,11 @@ export function CourseSection() {
     setPostCourseErrorMessage('')
 
     try {
-      const response = await fetch(POS_COURSES_ENDPOINT, {
-        method: 'GET',
-        headers: {
-          Accept: 'text/plain, */*',
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error(`Post courses request failed with status ${response.status}`)
-      }
-
-      const rawText = await response.text()
-      const parsedCourses = filterNursingPostCourses(parsePostGraduationCourses(rawText)).map(
-        (courseItem) => ({
-          value: courseItem.value,
-          label: courseItem.label,
-          courseId: courseItem.courseId,
-        }),
-      )
+      const parsedCourses = (await loadNursingPostCourses()).map((courseItem) => ({
+        value: courseItem.value,
+        label: courseItem.label,
+        courseId: courseItem.courseId,
+      }))
 
       if (!parsedCourses.length) {
         throw new Error('No post-graduation courses were parsed from the API response')
@@ -191,8 +175,12 @@ export function CourseSection() {
   }, [])
 
   useEffect(() => {
+    if (courseType !== 'pos' || postCourseStatus !== 'idle') {
+      return
+    }
+
     void loadPostCourses()
-  }, [loadPostCourses])
+  }, [courseType, loadPostCourses, postCourseStatus])
 
   useEffect(() => {
     return () => {
@@ -585,7 +573,7 @@ export function CourseSection() {
                     >
                       <SelectTrigger
                         className="lp-lead__select-trigger"
-                        aria-label="Selecione o tipo de curso"
+                        aria-label="Modalidade"
                         aria-invalid={courseTypeInvalid}
                         aria-describedby={courseTypeInvalid ? 'lead-course-type-error' : undefined}
                         onBlur={() => {

@@ -254,6 +254,9 @@ export function FooterSection({ onOpenPopup }: FooterSectionProps) {
               alt="Alunos de enfermagem em treinamento pr\u00e1tico"
               width={430}
               height={435}
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
             />
           </div>
 

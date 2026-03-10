@@ -93,6 +93,8 @@ export function FaqCtaSection() {
             alt="WhatsApp"
             width={57}
             height={57}
+            loading="lazy"
+            decoding="async"
           />
 
           <div className="lp-faq-contact__text">

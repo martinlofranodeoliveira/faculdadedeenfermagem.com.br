@@ -1,5 +1,3 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700;800&display=swap');
-
 :root {
   --lp-brand: #0c6b58;
   --lp-brand-dark: #08473b;
@@ -1061,17 +1059,15 @@
   margin: 40px 0 0px;
 }
 
-.lp-profile-banner::before {
-  content: '';
+.lp-profile-banner__background {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   pointer-events: none;
   opacity: 0.22;
   mix-blend-mode: exclusion;
-  background-image: url('/landing/perfil-banner-fundo.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 }
 
 .lp-profile-banner__inner {
@@ -1160,7 +1156,7 @@
   font-size: 15.176px;
   font-weight: 600;
   line-height: 1.45;
-  color: #1aa88c;
+  color: #0b6f58;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -1515,7 +1511,7 @@
 
 .lp-health-card__price span {
   font-weight: 500;
-  color: rgba(43, 33, 33, 0.25);
+  color: #716c6c;
   text-decoration: line-through;
 }
 
@@ -1741,7 +1737,7 @@
   margin-left: auto;
   border: 0;
   border-radius: 12px;
-  background: #2ab318;
+  background: #1b7f11;
   color: #ffffff;
   font-family: 'Kumbh Sans', var(--font-sans);
   font-size: 16px;
@@ -3281,7 +3277,7 @@
   .lp-market__salary-text {
     font-size: 11px;
     line-height: 1.4;
-    color: #1aa88c;
+    color: #0b6f58;
     font-weight: 600;
     white-space: nowrap;
   }
@@ -3464,6 +3460,7 @@
     padding: 3px 10px;
     border-radius: 23.127px;
     font-size: 11px;
+    color: #ffffff;
   }
 
   .lp-health-tag--coren {
@@ -3573,8 +3570,8 @@
     width: 100%;
     min-height: 39.077px;
     border-radius: 9.57px;
-    background: #00a979;
-    color: #ffffff;
+    background: #4cf8c7;
+    color: #061e20;
     font-size: 12.76px;
     line-height: 19.14px;
     align-self: stretch;
@@ -3758,4 +3755,3 @@
     font-size: 13px;
   }
 }
-
