@@ -40,7 +40,7 @@
 .lp-header__brand-group {
   display: flex;
   align-items: center;
-  gap: 80px;
+  gap: 75px;
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -62,7 +62,7 @@
 .lp-header__partner-row {
   display: flex;
   align-items: center;
-  gap: 45px;
+  gap: 35px;
   min-width: 0;
 }
 
@@ -81,19 +81,19 @@
 }
 
 .lp-header__partner-logo--fasul-group {
-  height: 25px;
+  height: 32px;
 }
 
 .lp-header__partner-logo--unicesp {
-  height: 24px;
+  height: 32px;
 }
 
 .lp-header__partner-logo--paulista {
-  height: 31px;
+  height: 32px;
 }
 
 .lp-header__partner-logo--psicologia {
-  height: 25px;
+  height: 32px;
 }
 
 .lp-header__cta {
