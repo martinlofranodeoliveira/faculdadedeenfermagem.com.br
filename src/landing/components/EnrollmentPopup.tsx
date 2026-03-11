@@ -26,6 +26,24 @@ type FieldErrors = {
 
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error'
 
+function normalizePopupCourseLabel(selection: CourseLeadSelection): string {
+  const normalizedLabel = selection.courseLabel.trim()
+  const isGraduation =
+    selection.courseType === 'graduacao' || selection.courseValue === 'graduacao-enfermagem'
+
+  if (!isGraduation) {
+    return normalizedLabel
+  }
+
+  const cleanedLabel = normalizedLabel
+    .replace(/\((?:semipresencial|presencial|ead)\)/gi, ' ')
+    .replace(/\b(?:semipresencial|presencial|ead)\b/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  return cleanedLabel || normalizedLabel
+}
+
 export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupProps) {
   const [selectedWorkload, setSelectedWorkload] = useState('')
   const [fullName, setFullName] = useState('')
@@ -89,6 +107,7 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
       : selection.workloadSummary
         ? [selection.workloadSummary]
         : []
+  const resolvedCourseLabel = normalizePopupCourseLabel(selection)
   const resolvedWorkloadText = isPostGraduation
     ? selectedWorkload ||
       (workloadOptions.length === 0 ? selection.workloadSummary || selection.workloadLabel || '' : '')
@@ -124,6 +143,7 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
         phone,
         selection: {
           ...selection,
+          courseLabel: resolvedCourseLabel,
           workloadLabel: selectedWorkload || selection.workloadLabel,
           workloadSummary: selectedWorkload || selection.workloadSummary,
         },
@@ -170,7 +190,7 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
             id="lp-enroll-popup-title"
             className={isPostGraduation ? 'lp-sr-only' : 'lp-enroll-popup__title'}
           >
-            Curso: {selection.courseLabel}
+            Curso: {resolvedCourseLabel}
           </h2>
 
           <p className="lp-enroll-popup__subtitle">
@@ -250,7 +270,7 @@ export function EnrollmentPopup({ isOpen, selection, onClose }: EnrollmentPopupP
 
           {isPostGraduation ? (
             <div className="lp-enroll-popup__summary">
-              <h3 className="lp-enroll-popup__summary-title">Curso: {selection.courseLabel}</h3>
+              <h3 className="lp-enroll-popup__summary-title">Curso: {resolvedCourseLabel}</h3>
               {resolvedWorkloadText ? (
                 <p className="lp-enroll-popup__summary-workload">{resolvedWorkloadText}</p>
               ) : null}
