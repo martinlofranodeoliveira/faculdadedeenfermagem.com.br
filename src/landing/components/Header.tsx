@@ -12,6 +12,8 @@ export function Header({ onOpenPopup }: HeaderProps) {
               className="lp-logo__image"
               src="/landing/faculdade-de-enfermagem-logo.webp"
               alt="Faculdade de Enfermagem"
+              width={162}
+              height={46}
             />
           </a>
 
@@ -20,6 +22,8 @@ export function Header({ onOpenPopup }: HeaderProps) {
               className="lp-header__partner-logo lp-header__partner-logo--fasul-group"
               src="/landing/logo-grupo-fasul-educacional.webp"
               alt="Grupo FASUL Educacional"
+              width={206}
+              height={44}
             />
 
             <span className="lp-header__brand-divider" aria-hidden="true" />
@@ -28,6 +32,8 @@ export function Header({ onOpenPopup }: HeaderProps) {
               className="lp-header__partner-logo lp-header__partner-logo--unicesp"
               src="/landing/logo-faculdade-unicesp.webp"
               alt="Faculdade Unicesp"
+              width={126}
+              height={44}
             />
 
             <span className="lp-header__brand-divider" aria-hidden="true" />
@@ -36,6 +42,8 @@ export function Header({ onOpenPopup }: HeaderProps) {
               className="lp-header__partner-logo lp-header__partner-logo--paulista"
               src="/landing/logo-faculdade-paulista.webp"
               alt="Faculdade Paulista"
+              width={141}
+              height={44}
             />
 
             <span className="lp-header__brand-divider" aria-hidden="true" />
@@ -44,6 +52,8 @@ export function Header({ onOpenPopup }: HeaderProps) {
               className="lp-header__partner-logo lp-header__partner-logo--psicologia"
               src="/landing/logo-faculdade-de-psicologia.webp"
               alt="Faculdade de Psicologia"
+              width={185}
+              height={44}
             />
           </div>
         </div>
