@@ -15,20 +15,40 @@ export function Header({ onOpenPopup }: HeaderProps) {
             />
           </a>
 
-          <span className="lp-header__brand-divider" aria-hidden="true" />
+          <div className="lp-header__partner-row">
+            <img
+              className="lp-header__partner-logo lp-header__partner-logo--fasul-group"
+              src="/landing/logo-grupo-fasul-educacional.webp"
+              alt="Grupo FASUL Educacional"
+            />
 
-          <img className="lp-header__partner-logo lp-header__partner-logo--unicesp" src="/landing/unicesp-logo.webp" alt="Unicesp" />
+            <span className="lp-header__brand-divider" aria-hidden="true" />
 
-          <span className="lp-header__brand-divider" aria-hidden="true" />
+            <img
+              className="lp-header__partner-logo lp-header__partner-logo--unicesp"
+              src="/landing/logo-faculdade-unicesp.webp"
+              alt="Faculdade Unicesp"
+            />
 
-          <img className="lp-header__partner-logo lp-header__partner-logo--fasul" src="/landing/fasul-logo.webp" alt="Fasul Educacional" />
+            <span className="lp-header__brand-divider" aria-hidden="true" />
+
+            <img
+              className="lp-header__partner-logo lp-header__partner-logo--paulista"
+              src="/landing/logo-faculdade-paulista.webp"
+              alt="Faculdade Paulista"
+            />
+
+            <span className="lp-header__brand-divider" aria-hidden="true" />
+
+            <img
+              className="lp-header__partner-logo lp-header__partner-logo--psicologia"
+              src="/landing/logo-faculdade-de-psicologia.webp"
+              alt="Faculdade de Psicologia"
+            />
+          </div>
         </div>
 
-        <button
-          type="button"
-          className="lp-header__cta"
-          onClick={onOpenPopup}
-        >
+        <button type="button" className="lp-header__cta" onClick={onOpenPopup}>
           QUERO ME MATRICULAR
         </button>
       </div>
