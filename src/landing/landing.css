@@ -88,14 +88,6 @@
   height: 32px;
 }
 
-.lp-header__partner-logo--paulista {
-  height: 32px;
-}
-
-.lp-header__partner-logo--psicologia {
-  height: 32px;
-}
-
 .lp-header__cta {
   width: 235px;
   height: 44px;
@@ -2432,14 +2424,6 @@
     height: 19px;
   }
 
-  .lp-header__partner-logo--paulista {
-    height: 24px;
-  }
-
-  .lp-header__partner-logo--psicologia {
-    height: 20px;
-  }
-
   .lp-header__cta {
     align-self: flex-end;
   }
@@ -2870,14 +2854,6 @@
   }
 
   .lp-header__partner-logo--unicesp {
-    height: 19px;
-  }
-
-  .lp-header__partner-logo--paulista {
-    height: 23px;
-  }
-
-  .lp-header__partner-logo--psicologia {
     height: 19px;
   }
 

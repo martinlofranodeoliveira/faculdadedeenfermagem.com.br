@@ -18,14 +18,6 @@ export function Header({ onOpenPopup }: HeaderProps) {
           </a>
 
           <div className="lp-header__partner-row">
-            <img
-              className="lp-header__partner-logo lp-header__partner-logo--fasul-group"
-              src="/landing/logo-grupo-fasul-educacional.webp"
-              alt="Grupo FASUL Educacional"
-              width={206}
-              height={44}
-            />
-
             <span className="lp-header__brand-divider" aria-hidden="true" />
 
             <img
@@ -36,23 +28,11 @@ export function Header({ onOpenPopup }: HeaderProps) {
               height={44}
             />
 
-            <span className="lp-header__brand-divider" aria-hidden="true" />
-
             <img
-              className="lp-header__partner-logo lp-header__partner-logo--paulista"
-              src="/landing/logo-faculdade-paulista.webp"
-              alt="Faculdade Paulista"
-              width={141}
-              height={44}
-            />
-
-            <span className="lp-header__brand-divider" aria-hidden="true" />
-
-            <img
-              className="lp-header__partner-logo lp-header__partner-logo--psicologia"
-              src="/landing/logo-faculdade-de-psicologia.webp"
-              alt="Faculdade de Psicologia"
-              width={185}
+              className="lp-header__partner-logo lp-header__partner-logo--fasul-group"
+              src="/landing/logo-grupo-fasul-educacional.webp"
+              alt="Grupo FASUL Educacional"
+              width={206}
               height={44}
             />
           </div>
