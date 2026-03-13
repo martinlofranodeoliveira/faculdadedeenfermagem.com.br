@@ -40,7 +40,7 @@
 .lp-header__brand-group {
   display: flex;
   align-items: center;
-  gap: 75px;
+  gap: 45px;
   flex: 1 1 auto;
   min-width: 0;
 }
